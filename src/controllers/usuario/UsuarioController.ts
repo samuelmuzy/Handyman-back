@@ -1,34 +1,22 @@
 import { Request, Response } from 'express';
-import Usuario from '../../models/usuario/Usuario';
+import { UsuarioService } from '../../service/usuario/UsuarioService';
 
+
+const usuarioService = new UsuarioService();
 
 export class UsuarioController {
-    
-    public async criarUsuario(req: Request, res: Response): Promise<void> {
+    public criar = async (req: Request, res: Response):Promise<void> => {
         try {
             const { nome, sobrenome } = req.body;
-            const novoUsuario = new Usuario({ nome, sobrenome });
-            
-            await novoUsuario.save();
-            
-            res.status(201).json({ message: 'Usuário criado com sucesso!', usuario: novoUsuario });
-        } catch (error) {
-            res.status(400).json({ error: 'Erro ao criar usuário', details: error });
-        }
-    }
+            const usuario = await usuarioService.criarUsuario(nome, sobrenome);
 
-    public async listarUsuarios(req: Request, res: Response): Promise<void> {
-        try {
-            const usuarios = await Usuario.find();
-            res.json(usuarios);
-        } catch (error) {
-            res.status(500).json({ error: 'Erro ao buscar usuários', details: error });
+            res.status(201).json(usuario); 
+        } catch (error:unknown) {
+            if (error instanceof Error) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao criar usuário' });
+            }
         }
-    }
-
-    public async exibirPagina(req: Request, res: Response): Promise<void> {
-        res.render('index', { titulo: 'Página de Usuários' });
-    }
+    };
 }
-
-

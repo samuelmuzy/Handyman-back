@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export abstract class BaseBancoDeDados {
+    constructor() {
+        this.conectar();
+    }
+    
     protected async conectar(): Promise<void> {
         try {
             await mongoose.connect(process.env.MONGO_URI as string, {

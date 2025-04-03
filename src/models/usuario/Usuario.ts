@@ -1,18 +1,17 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { BaseBancoDeDados } from '../connection';
+import { BaseBancoDeDados } from '../../config/connection';
 
 export interface IUsuario extends Document {
     nome: string;
     sobrenome: string;
 }
 
-class Usuario extends BaseBancoDeDados {
+export class Usuario extends BaseBancoDeDados {
     private schema: Schema<IUsuario>;
     private model;
 
     constructor() {
         super();
-        this.conectar();
         
         this.schema = new Schema<IUsuario>({
             nome: { type: String, required: true },
@@ -28,4 +27,4 @@ class Usuario extends BaseBancoDeDados {
     }
 }
 
-export default new Usuario().getModel();
+

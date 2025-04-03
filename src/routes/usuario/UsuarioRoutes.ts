@@ -5,5 +5,4 @@ export const usuarioRouter = express.Router();
 
 const usuarioController = new UsuarioController();
 
-usuarioRouter.post('/',usuarioController.criarUsuario);
-usuarioRouter.get('/',usuarioController.listarUsuarios);
+usuarioRouter.post('/',usuarioController.criar);
