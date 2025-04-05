@@ -1,5 +1,5 @@
 import { IUsuario } from "../../models/Usuario/Usuario";
-import { UsuarioRepository } from "../../repositories/usuario/UsuarioRepository";
+import { UsuarioRepository } from "../../repositories/Usuario/UsuarioRepository";
 import { CustomError } from "../CustomError";
 
 

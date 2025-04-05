@@ -1,5 +1,5 @@
 import  express  from 'express';
-import { UsuarioController } from '../../controllers/usuario/UsuarioController';
+import { UsuarioController } from '../../controllers/Usuario/UsuarioController';
 
 export const usuarioRouter = express.Router();
 

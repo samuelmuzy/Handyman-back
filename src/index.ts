@@ -1,4 +1,4 @@
 import { app } from './app';
-import { usuarioRouter } from './routes/usuario/UsuarioRoutes';
+import { usuarioRouter } from './routes/Usuario/UsuarioRoutes';
 
 app.use('/usuarios',usuarioRouter);
