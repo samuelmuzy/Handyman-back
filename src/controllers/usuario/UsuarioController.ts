@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UsuarioService } from '../../service/usuario/UsuarioService';
+import { CustomError } from '../../service/CustomError';
 
 
 const usuarioService = new UsuarioService();
@@ -12,8 +13,8 @@ export class UsuarioController {
 
             res.status(201).json(usuario); 
         } catch (error:unknown) {
-            if (error instanceof Error) {
-                res.status(400).json({ error: error.message });
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
             } else {
                 res.status(500).json({ error: 'Erro desconhecido ao criar usuário' });
             }
