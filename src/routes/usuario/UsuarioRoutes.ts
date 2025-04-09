@@ -6,3 +6,4 @@ export const usuarioRouter = express.Router();
 const usuarioController = new UsuarioController();
 
 usuarioRouter.post('/',usuarioController.criar);
+usuarioRouter.get('/',usuarioController.buscar);

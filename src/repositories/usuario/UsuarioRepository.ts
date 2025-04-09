@@ -1,15 +1,14 @@
 import { IUsuario, Usuario } from "../../models/Usuario/Usuario";
-
-
+import { typeUsuario } from "../../types/usuarioType";
 
 export class UsuarioRepository {
     private model = new Usuario().getModel();
 
-    public async criar(nome: string, sobrenome: string): Promise<IUsuario> {
+    public async criar(usuario:typeUsuario): Promise<IUsuario> {
         try {
-            const usuario = new this.model({ nome, sobrenome });
+            const usuarioSalvar = new this.model({ usuario });
 
-            return await usuario.save();
+            return await usuarioSalvar.save();
         } catch (error:unknown) {
             if (error instanceof Error) {
                 throw new Error(`Erro ao criar usuário: ${error.message}`);
@@ -19,7 +18,7 @@ export class UsuarioRepository {
         }
     }
 
-    public async buscarPorId(id: string): Promise<IUsuario | null> {
-        return await this.model.findById(id).exec();
+    public async buscarPorId() {
+        return await this.model.find();
     }
 }

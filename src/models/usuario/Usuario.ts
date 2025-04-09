@@ -3,7 +3,10 @@ import { BaseBancoDeDados } from '../../config/connection';
 
 export interface IUsuario extends Document {
     nome: string;
-    sobrenome: string;
+    senha: string;
+    telefone:string;
+    email:string;
+    formaPagamento:string;
 }
 
 export class Usuario extends BaseBancoDeDados {
@@ -15,7 +18,10 @@ export class Usuario extends BaseBancoDeDados {
         
         this.schema = new Schema<IUsuario>({
             nome: { type: String, required: true },
-            sobrenome: { type: String, required: true }
+            senha: { type: String, required: true },
+            telefone:{ type:String, required:true },
+            email:{ type:String, required:true },
+            formaPagamento: { type:String,require:true }
         });
 
         this.model = mongoose.model<IUsuario>('usuarios', this.schema);
