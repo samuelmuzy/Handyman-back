@@ -7,3 +7,4 @@ const usuarioController = new UsuarioController();
 
 usuarioRouter.post('/',usuarioController.criar);
 usuarioRouter.get('/',usuarioController.buscar);
+usuarioRouter.post('/login',usuarioController.login);

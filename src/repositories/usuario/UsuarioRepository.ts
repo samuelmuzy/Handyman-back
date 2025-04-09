@@ -6,7 +6,7 @@ export class UsuarioRepository {
 
     public async criar(usuario:typeUsuario): Promise<IUsuario> {
         try {
-            const usuarioSalvar = new this.model({ usuario });
+            const usuarioSalvar = new this.model( usuario );
 
             return await usuarioSalvar.save();
         } catch (error:unknown) {
@@ -20,5 +20,11 @@ export class UsuarioRepository {
 
     public async buscarPorId() {
         return await this.model.find();
+    }
+
+    public async buscarEmail(email:string){
+        
+        const usuario = await this.model.findOne({ email: email });
+        return usuario;
     }
 }
