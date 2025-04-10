@@ -4,7 +4,7 @@ import { typeUsuario } from "../../types/usuarioType";
 export class UsuarioRepository {
     private model = new Usuario().getModel();
 
-    public async criar(usuario:typeUsuario): Promise<IUsuario> {
+    public async criarUsuario(usuario:typeUsuario): Promise<IUsuario> {
         try {
             const usuarioSalvar = new this.model( usuario );
 
@@ -18,12 +18,11 @@ export class UsuarioRepository {
         }
     }
 
-    public async buscarPorId() {
+    public async buscarUsuarios() {
         return await this.model.find();
     }
 
     public async buscarEmail(email:string){
-        
         const usuario = await this.model.findOne({ email: email });
         return usuario;
     }

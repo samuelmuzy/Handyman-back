@@ -5,36 +5,42 @@ import { UsuarioRepository } from "../../repositories/Usuario/UsuarioRepository"
 import { typeUsuario } from "../../types/usuarioType";
 import { CustomError } from "../CustomError";
 import { generateToken } from "../../middlewares/Authenticator";
+import { BaseService } from "../BaseService";
 
 
-export class UsuarioService {
+export class UsuarioService extends BaseService {
     private usuarioRepository: UsuarioRepository;
 
     constructor(usuarioRepository?: UsuarioRepository) {
+        super();
         this.usuarioRepository = usuarioRepository || new UsuarioRepository();
     }
 
     public async criarUsuario(usuario:typeUsuario): Promise<IUsuario> {
         try{
-            if (!usuario.nome || !usuario.email) {
-                throw new CustomError('Nome e sobrenome são obrigatórios', 400);
-            }
+            this.validateRequiredFields(usuario,['email','formaPagamento','nome','senha','telefone']);
 
+            const emailExiste = await this.usuarioRepository.buscarEmail(usuario.email);
+
+            if(emailExiste){
+                throw new CustomError('Email já existe', 400);
+            }
+            
             const senhaHash = hash(usuario.senha);
 
             usuario.senha = await senhaHash;
 
-            return await this.usuarioRepository.criar(usuario);
+            return await this.usuarioRepository.criarUsuario(usuario);
         }catch (error:unknown){
             if (error instanceof CustomError) {
                 throw new CustomError(`Erro ao criar usuário: ${error.message}`, error.statusCode);
             } else {
-                throw new CustomError('Erro desconhecido ao criar usuário',500);
+                throw new CustomError('Erro desconhecido',500);
             }
         }
     }
 
-    public async login(email:string,senha:string){
+    public async login(email:string,senha:string): Promise<string>{
         try{
             
             const user = await this.usuarioRepository.buscarEmail(email);
@@ -42,8 +48,6 @@ export class UsuarioService {
             if(!user){
                 throw new CustomError('Email não encontrado',404);
             }
-            console.log(user.senha);
-            console.log(senha);
         
             const senhaCorreta = await compare(senha, user.senha);
 
@@ -57,21 +61,27 @@ export class UsuarioService {
         
         }catch (error:unknown){
             if (error instanceof CustomError) {
-                throw new CustomError(`Erro ao criar usuário: ${error.message}`, error.statusCode);
+                throw new CustomError(error.message, error.statusCode);
             } else {
                 throw new CustomError('Erro desconhecido ao criar usuário',500);
             }
         }
     }
 
-    public async buscar(){
+    public async buscarUsuario():Promise<typeUsuario[]>{
         try{
-            return await this.usuarioRepository.buscarPorId();
+            const usuarios = await this.usuarioRepository.buscarUsuarios();
+
+            if(usuarios.length === 0){
+                throw new CustomError('Nenhum usuário encontrado',404);
+            }
+            
+            return usuarios;
         }catch (error:unknown){
             if (error instanceof CustomError) {
-                throw new CustomError(`Erro ao criar usuário: ${error.message}`, error.statusCode);
+                throw new CustomError(error.message, error.statusCode);
             } else {
-                throw new CustomError('Erro desconhecido ao criar usuário',500);
+                throw new CustomError('Erro desconhecido',500);
             }
         }
     }

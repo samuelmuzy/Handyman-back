@@ -7,11 +7,12 @@ import { typeUsuario } from '../../types/usuarioType';
 const usuarioService = new UsuarioService();
 
 export class UsuarioController {
-    public criar = async (req: Request, res: Response):Promise<void> => {
+    
+    public criarUsuario = async (req: Request, res: Response):Promise<void> => {
         try {
             const { nome, email,senha, telefone,formaPagamento } = req.body;
 
-            const usuarioSalvar:typeUsuario = {
+            const usuarioSalvar: typeUsuario = {
                 nome,
                 email,
                 senha,
@@ -47,9 +48,9 @@ export class UsuarioController {
         }
     };
 
-    public buscar = async (req: Request, res: Response):Promise<void> => {
+    public buscarUsuarios = async (req: Request, res: Response):Promise<void> => {
         try{
-            const usuarios = await usuarioService.buscar();
+            const usuarios = await usuarioService.buscarUsuario();
             res.status(200).json(usuarios);
         }catch (error:unknown) {
             if (error instanceof CustomError) {
