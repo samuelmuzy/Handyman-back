@@ -19,11 +19,28 @@ export class UsuarioRepository {
     }
 
     public async buscarUsuarios() {
-        return await this.model.find();
+        try{
+            return await this.model.find();
+        } catch (error:unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao criar usuário: ${error.message}`);
+            } else {
+                throw new Error('Erro desconhecido ao criar usuário');
+            }
+        }
     }
 
     public async buscarEmail(email:string){
-        const usuario = await this.model.findOne({ email: email });
-        return usuario;
+        try{
+            const usuario = await this.model.findOne({ email: email });
+            return usuario;
+
+        }catch (error:unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao criar usuário: ${error.message}`);
+            } else {
+                throw new Error('Erro desconhecido ao criar usuário');
+            }
+        }
     }
 }
