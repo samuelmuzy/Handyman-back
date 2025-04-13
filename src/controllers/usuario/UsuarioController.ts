@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UsuarioService } from '../../service/Usuario/UsuarioService';
+import { UsuarioService } from '../../service/usuario/UsuarioService';
 import { CustomError } from '../../service/CustomError';
 import { typeUsuario } from '../../types/usuarioType';
 

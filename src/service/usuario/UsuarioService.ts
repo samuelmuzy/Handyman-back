@@ -1,7 +1,7 @@
 import { compare } from "bcryptjs";
 import { hash } from "../../middlewares/hashManager";
-import { IUsuario } from "../../models/Usuario/Usuario";
-import { UsuarioRepository } from "../../repositories/Usuario/UsuarioRepository";
+import { IUsuario } from "../../models/usuario/Usuario";
+import { UsuarioRepository } from "../../repositories/usuario/UsuarioRepository";
 import { typeUsuario } from "../../types/usuarioType";
 import { CustomError } from "../CustomError";
 import { generateToken } from "../../middlewares/Authenticator";
