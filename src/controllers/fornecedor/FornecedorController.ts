@@ -134,4 +134,18 @@ export class FornecedorController {
             }
         }
     };
+
+    public deletarFornecedor = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { id } = req.params;
+            await fornecedorService.deletarFornecedor(id);
+            res.status(200).json({ message: 'Fornecedor deletado com sucesso' });
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao deletar fornecedor' });
+            }
+        }
+    };
 } 

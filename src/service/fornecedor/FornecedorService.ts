@@ -177,4 +177,21 @@ export class FornecedorService extends BaseService {
             }
         }
     }
+
+    public async deletarFornecedor(id: string): Promise<void> {
+        try {
+            const fornecedor = await this.fornecedorRepository.buscarFornecedorPorId(id);
+            if (!fornecedor) {
+                throw new CustomError('Fornecedor não encontrado', 404);
+            }
+
+            await this.fornecedorRepository.deletarFornecedor(id);
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                throw new CustomError(error.message, error.statusCode);
+            } else {
+                throw new CustomError('Erro desconhecido', 500);
+            }
+        }
+    }
 } 
