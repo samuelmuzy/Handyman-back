@@ -8,7 +8,7 @@ export type typeEndereco = {
 export type typeDisponibilidade = {
     data: string;
     horario: string;
-    status: "livre" | "ocupado";
+    status: 'livre' | 'ocupado';
 }
 
 export type typeFornecedor = {

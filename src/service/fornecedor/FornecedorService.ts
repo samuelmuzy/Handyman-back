@@ -1,10 +1,10 @@
-import { IFornecedor } from "../../models/fornecedor/Fornecedor";
-import { FornecedorRepository } from "../../repositories/fornecedor/FornecedorRepository";
-import { typeFornecedor } from "../../types/fornecedorType";
-import { CustomError } from "../CustomError";
-import { BaseService } from "../BaseService";
-import { hash, compare } from "../../middlewares/hashManager";
-import { generateToken } from "../../middlewares/Authenticator";
+import { IFornecedor } from '../../models/fornecedor/Fornecedor';
+import { FornecedorRepository } from '../../repositories/fornecedor/FornecedorRepository';
+import { typeFornecedor } from '../../types/fornecedorType';
+import { CustomError } from '../CustomError';
+import { BaseService } from '../BaseService';
+import { hash, compare } from '../../middlewares/hashManager';
+import { generateToken } from '../../middlewares/Authenticator';
 
 export class FornecedorService extends BaseService {
     private fornecedorRepository: FornecedorRepository;
