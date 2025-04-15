@@ -1,5 +1,20 @@
 [{
   "_id": {
-    "$oid": "67fdb3d303902d57e128012b"
+    "$oid": "67fdb3d303902d57e128012b",
+    "nome": "João Silva",
+    "email": "joao.silva@email.com",
+    "telefone": "11987654321",
+    "senha": "$2b$10$exemploHashSenha",
+    "endereco": {
+      "rua": "Rua das Flores, 123",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "cep": "01234-567"
+    },
+    "formas_pagamento": [
+      { "tipo": "cartão", "detalhes": "**** **** **** 1234" },
+      { "tipo": "pix", "detalhes": "joao.silva@email.com" }
+    ],
+    "historico_servicos": ["servico789", "servico456"]
   }
 }]

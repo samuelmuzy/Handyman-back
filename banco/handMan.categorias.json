@@ -1,10 +1,12 @@
-[{
-  "_id": {
-    "$oid": "67fdb5f703902d57e1280137"
+[
+  {
+    "_id": { "$oid": "67fdb5f703902d57e1280137" },
+    "nome": "Elétrica",
+    "descricao": "Serviços relacionados a instalações e reparos elétricos"
+  },
+  {
+    "_id": { "$oid": "67fdb78803902d57e1280138" },
+    "nome": "Hidráulica",
+    "descricao": "Serviços de encanamento e reparos hidráulicos"
   }
-},
-{
-  "_id": {
-    "$oid": "67fdb78803902d57e1280138"
-  }
-}]
+]

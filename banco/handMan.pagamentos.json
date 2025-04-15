@@ -1,5 +1,11 @@
 [{
   "_id": {
-    "$oid": "67fdb7be03902d57e128013a"
+    "$oid": "67fdb7be03902d57e128013a",
+    "id_servico": "servico789",
+    "valor": 150.00,
+    "metodo": "pix",
+    "status": "pago",
+    "comprovante": "https://handyman.com/comprovantes/pag321.pdf",
+    "data_pagamento": "2025-04-08T10:00:00Z"
   }
 }]

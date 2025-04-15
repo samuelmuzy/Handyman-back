@@ -1,5 +1,23 @@
 [{
   "_id": {
-    "$oid": "67fdb48403902d57e128012d"
+    "$oid": "67fdb48403902d57e128012d",
+    "nome": "Maria Oliveira",
+    "email": "maria.oliveira@email.com",
+    "telefone": "21987654321",
+    "senha": "$2b$10$exemploHashSenha",
+    "endereco": {
+      "rua": "Avenida Central, 456",
+      "cidade": "Rio de Janeiro",
+      "estado": "RJ",
+      "cep": "20000-000"
+    },
+    "categoria_servico": ["cat001", "cat002"],
+    "descricao": "Especialista em reparos elétricos e hidráulicos",
+    "disponibilidade": [
+      { "data": "2025-04-10", "horario": "09:00-10:00", "status": "livre" },
+      { "data": "2025-04-10", "horario": "14:00-15:00", "status": "ocupado" }
+    ],
+    "solicitacoes": ["servico789"],
+    "media_avaliacoes": 4.5
   }
 }]

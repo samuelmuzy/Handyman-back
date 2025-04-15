@@ -1,5 +1,13 @@
 [{
   "_id": {
-    "$oid": "67fdb5af03902d57e1280131"
+    "$oid": "67fdb5af03902d57e1280131",
+    "id_usuario": "usuario123",
+    "id_fornecedor": "fornecedor456",
+    "categoria": "cat001",
+    "data": "2025-04-10",
+    "horario": "14:00-15:00",
+    "status": "agendado",
+    "id_pagamento": "pagamento321",
+    "id_avaliacao": null
   }
 }]

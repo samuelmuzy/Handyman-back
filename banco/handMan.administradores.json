@@ -1,5 +1,8 @@
 [{
   "_id": {
-    "$oid": "67fdb4d703902d57e128012f"
+    "$oid": "67fdb4d703902d57e128012f",
+    "nome": "handADM",
+    "email": "carlos.admin@handyman.com",
+    "senha": "$2b$10$exemploHashSenha"
   }
 }]
