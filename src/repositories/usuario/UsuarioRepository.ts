@@ -1,5 +1,5 @@
-import { IUsuario, Usuario } from "../../models/usuario/Usuario";
-import { typeUsuario } from "../../types/usuarioType";
+import { IUsuario, Usuario } from '../../models/usuario/Usuario';
+import { typeUsuario } from '../../types/usuarioType';
 
 export class UsuarioRepository {
     private model = new Usuario().getModel();
@@ -34,8 +34,6 @@ export class UsuarioRepository {
         }
     }
     
-    
-
     public async buscarUsuarios() {
         try{
             return await this.model.find();
