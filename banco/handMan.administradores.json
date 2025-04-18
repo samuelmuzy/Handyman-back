@@ -1,8 +1,44 @@
-[{
-  "_id": {
-    "$oid": "67fdb4d703902d57e128012f",
-    "nome": "handADM",
-    "email": "carlos.admin@handyman.com",
-    "senha": "$2b$10$exemploHashSenha"
+[
+  {
+    "id_administrador": "adm001",
+    "nome": "Victor Amorim",
+    "email": "victor.amorim@handman.com",
+    "senha": "senha123"
+  },
+  {
+    "id_administrador": "adm002",
+    "nome": "Gabriel Setta",
+    "email": "gabriel.setta@handman.com",
+    "senha": "senha123"
+  },
+  {
+    "id_administrador": "adm003",
+    "nome": "João Paulo",
+    "email": "joao.paulo@handman.com",
+    "senha": "senha123"
+  },
+  {
+    "id_administrador": "adm004",
+    "nome": "Samuel Muzy",
+    "email": "samuel.muzy@handman.com",
+    "senha": "senha123"
+  },
+  {
+    "id_administrador": "adm005",
+    "nome": "Gabriel Bianchini",
+    "email": "gabriel.bianchini@handman.com",
+    "senha": "senha123"
+  },
+  {
+    "id_administrador": "adm006",
+    "nome": "Blendow Mendes",
+    "email": "blendow.mendes@handman.com",
+    "senha": "senha123"
+  },
+  {
+    "id_administrador": "adm007",
+    "nome": "João Antônio",
+    "email": "joao.antonio@handman.com",
+    "senha": "senha123"
   }
-}]
+]
