@@ -1,12 +1,22 @@
 [
   {
-    "_id": { "$oid": "67fdb5f703902d57e1280137" },
+    "_id": "cat001",
     "nome": "Elétrica",
-    "descricao": "Serviços relacionados a instalações e reparos elétricos"
+    "descricao": "Serviços relacionados a instalações, reparos elétricos, troca de tomadas, disjuntores e fiação em geral."
   },
   {
-    "_id": { "$oid": "67fdb78803902d57e1280138" },
+    "_id": "cat002",
     "nome": "Hidráulica",
-    "descricao": "Serviços de encanamento e reparos hidráulicos"
+    "descricao": "Serviços de encanamento, desentupimento, vazamentos e instalação de torneiras e chuveiros."
+  },
+  {
+    "_id": "cat003",
+    "nome": "Montagem de Móveis",
+    "descricao": "Montagem de móveis planejados# ou prontos, instalação de prateleiras, painéis e ajustes finos."
+  },
+  {
+    "_id": "cat004",
+    "nome": "Manutenção de Computadores",
+    "descricao": "Formatação, limpeza, instalação de software, montagem de PCs e manutenção de notebooks e redes."
   }
 ]

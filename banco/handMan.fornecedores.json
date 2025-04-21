@@ -1,23 +1,88 @@
-[{
-  "_id": {
-    "$oid": "67fdb48403902d57e128012d",
-    "nome": "Maria Oliveira",
-    "email": "maria.oliveira@email.com",
-    "telefone": "21987654321",
-    "senha": "$2b$10$exemploHashSenha",
+[
+  {
+    "_id": "fornecedor001",
+    "nome": "Paulo Eletricista",
+    "cpf": "111.222.333-96",
+    "email": "paulo.eletricista@email.com",
+    "telefone": "11988889999",
+    "senha": "paulo123",
     "endereco": {
-      "rua": "Avenida Central, 456",
-      "cidade": "Rio de Janeiro",
-      "estado": "RJ",
-      "cep": "20000-000"
+      "rua": "Av. Energia, 202",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "cep": "03030-000"
     },
-    "categoria_servico": ["cat001", "cat002"],
-    "descricao": "Especialista em reparos elétricos e hidráulicos",
+    "categoria_servico": ["cat001"],
+    "descricao": "Especialista em fiação, disjuntores e tomadas.",
     "disponibilidade": [
-      { "data": "2025-04-10", "horario": "09:00-10:00", "status": "livre" },
-      { "data": "2025-04-10", "horario": "14:00-15:00", "status": "ocupado" }
+      { "data": "2025-04-15", "horario": "09:00-10:00", "status": "livre" },
+      { "data": "2025-04-15", "horario": "10:00-11:00", "status": "ocupado" }
     ],
-    "solicitacoes": ["servico789"],
-    "media_avaliacoes": 4.5
+    "solicitacoes": ["servico001", "servico002"],
+    "media_avaliacoes": 4.8
+  },
+  {
+    "_id": "fornecedor002",
+    "nome": "Juliana Encanadora",
+    "cpf": "444.555.666-77",
+    "email": "juliana.encanadora@email.com",
+    "telefone": "21999998888",
+    "senha": "juliana123",
+    "endereco": {
+      "rua": "Av. Água Clara, 456",
+      "cidade": "Niterói",
+      "estado": "RJ",
+      "cep": "24000-000"
+    },
+    "categoria_servico": ["cat002"],
+    "descricao": "Reparos hidráulicos e desentupimentos em geral.",
+    "disponibilidade": [
+      { "data": "2025-04-16", "horario": "14:00-15:00", "status": "livre" }
+    ],
+    "solicitacoes": ["servico003"],
+    "media_avaliacoes": 4.6
+  },
+  {
+    "_id": "fornecedor003",
+    "nome": "Rafael Montador",
+    "cpf": "777.888.999-00",
+    "email": "rafael.montador@email.com",
+    "telefone": "11991234567",
+    "senha": "rafael123",
+    "endereco": {
+      "rua": "Rua dos Móveis, 123",
+      "cidade": "Campinas",
+      "estado": "SP",
+      "cep": "13000-001"
+    },
+    "categoria_servico": ["cat003"],
+    "descricao": "Montagem de móveis sob medida, móveis prontos e reparos.",
+    "disponibilidade": [
+      { "data": "2025-04-17", "horario": "08:00-09:00", "status": "livre" },
+      { "data": "2025-04-17", "horario": "10:00-11:00", "status": "livre" }
+    ],
+    "solicitacoes": ["servico004"],
+    "media_avaliacoes": 4.9
+  },
+  {
+    "_id": "fornecedor004",
+    "nome": "André Técnico",
+    "cpf": "321.654.987-01",
+    "email": "andre.tecnico@email.com",
+    "telefone": "31990011222",
+    "senha": "andre123",
+    "endereco": {
+      "rua": "Av. Tecnologia, 789",
+      "cidade": "Belo Horizonte",
+      "estado": "MG",
+      "cep": "30150-090"
+    },
+    "categoria_servico": ["cat004"],
+    "descricao": "Manutenção de computadores, notebooks e redes.",
+    "disponibilidade": [
+      { "data": "2025-04-18", "horario": "13:00-14:00", "status": "livre" }
+    ],
+    "solicitacoes": [],
+    "media_avaliacoes": 4.4
   }
-}]
+]

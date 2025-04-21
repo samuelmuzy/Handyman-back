@@ -1,11 +1,56 @@
-[{
-  "_id": {
-    "$oid": "67fdb7be03902d57e128013a",
-    "id_servico": "servico789",
+[
+  {
+    "_id": "pag001",
+    "id_servico": "servico001",
+    "valor": 200.00,
+    "metodo": "cartão",
+    "status": "pago",
+    "comprovante": "https://handman.com/comprovantes/pag001.pdf",
+    "data_pagamento": "2025-04-14T10:00:00Z"
+  },
+  {
+    "_id": "pag002",
+    "id_servico": "servico002",
+    "valor": 180.00,
+    "metodo": "pix",
+    "status": "pendente",
+    "comprovante": "",
+    "data_pagamento": ""
+  },
+  {
+    "_id": "pag003",
+    "id_servico": "servico003",
     "valor": 150.00,
+    "metodo": "boleto",
+    "status": "falhou",
+    "comprovante": "",
+    "data_pagamento": ""
+  },
+  {
+    "_id": "pag004",
+    "id_servico": "servico004",
+    "valor": 220.00,
     "metodo": "pix",
     "status": "pago",
-    "comprovante": "https://handyman.com/comprovantes/pag321.pdf",
-    "data_pagamento": "2025-04-08T10:00:00Z"
+    "comprovante": "https://handman.com/comprovantes/pag004.png",
+    "data_pagamento": "2025-04-17T11:00:00Z"
+  },
+  {
+    "_id": "pag005",
+    "id_servico": "servico005",
+    "valor": 130.00,
+    "metodo": "boleto",
+    "status": "pendente",
+    "comprovante": "",
+    "data_pagamento": ""
+  },
+  {
+    "_id": "pag006",
+    "id_servico": "servico006",
+    "valor": 160.00,
+    "metodo": "cartão",
+    "status": "pago",
+    "comprovante": "https://handman.com/comprovantes/pag006.jpg",
+    "data_pagamento": "2025-04-21T14:00:00Z"
   }
-}]
+]
