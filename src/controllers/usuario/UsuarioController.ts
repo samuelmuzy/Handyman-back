@@ -48,10 +48,7 @@ export class UsuarioController {
         }
     };
 
-    public buscarUsuarios = async (
-        req: Request,
-        res: Response
-    ): Promise<void> => {
+    public buscarUsuarios = async (req: Request,res: Response): Promise<void> => {
         try {
             const usuarios = await usuarioService.buscarUsuario();
             res.status(200).json(usuarios);
@@ -68,6 +65,7 @@ export class UsuarioController {
         try {
             const { id } = req.params;
             const { nome, email, telefone, senha, formaPagamento,endereco,historico_servicos } = req.body;
+            const token = req.headers.authorization!;
             
             const usuarioAtualizado: typeUsuario = {
                 nome,
@@ -78,7 +76,7 @@ export class UsuarioController {
                 endereco,
                 historico_servicos
             };
-            const usuario = await usuarioService.updateUser(id, usuarioAtualizado);
+            const usuario = await usuarioService.updateUser(id, usuarioAtualizado,token);
 
             res.status(200).json(usuario);
         } catch (error: unknown) {

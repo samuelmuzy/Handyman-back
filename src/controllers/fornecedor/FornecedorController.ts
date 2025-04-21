@@ -79,7 +79,9 @@ export class FornecedorController {
         try {
             const { id } = req.params;
             const dados = req.body;
+            
             const fornecedor = await fornecedorService.atualizarFornecedor(id, dados);
+            
             res.status(200).json(fornecedor);
         } catch (error: unknown) {
             if (error instanceof CustomError) {
@@ -94,7 +96,9 @@ export class FornecedorController {
         try {
             const { id } = req.params;
             const { idSolicitacao } = req.body;
+            
             await fornecedorService.adicionarSolicitacao(id, idSolicitacao);
+            
             res.status(200).json({ message: 'Solicitação adicionada com sucesso' });
         } catch (error: unknown) {
             if (error instanceof CustomError) {

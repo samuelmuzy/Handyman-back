@@ -4,7 +4,7 @@ import { IUsuario } from '../../models/usuario/Usuario';
 import { UsuarioRepository } from '../../repositories/usuario/UsuarioRepository';
 import { typeUsuario } from '../../types/usuarioType';
 import { CustomError } from '../CustomError';
-import { generateToken } from '../../middlewares/Authenticator';
+import { generateToken, getTokenData } from '../../middlewares/Authenticator';
 import { BaseService } from '../BaseService';
 
 export class UsuarioService extends BaseService {
@@ -95,8 +95,16 @@ export class UsuarioService extends BaseService {
     }
     public async updateUser(
         id: string,
-        user: Partial<typeUsuario>
+        user: Partial<typeUsuario>,
+        token:string
     ): Promise<IUsuario> {
+
+        const verifyToken = getTokenData(token);
+
+        if(!verifyToken){
+            throw new CustomError('sem autorização',403);
+        }
+
         const usuarioExistente = await this.usuarioRepository.buscarPorId(id);
   
         if (!usuarioExistente) {
