@@ -8,5 +8,5 @@ const usuarioController = new UsuarioController();
 usuarioRouter.post('/',usuarioController.criarUsuario);
 usuarioRouter.get('/',usuarioController.buscarUsuarios);
 usuarioRouter.get('/historico/:id',usuarioController.buscarHistoricoDeServicosPorId)
-usuarioRouter.post('/login-user',usuarioController.login);
+usuarioRouter.post('/login',usuarioController.login);
 usuarioRouter.put('/users/:id',usuarioController.updateUser);
