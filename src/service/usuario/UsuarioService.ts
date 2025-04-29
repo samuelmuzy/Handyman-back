@@ -112,4 +112,16 @@ export class UsuarioService extends BaseService {
             this.handleError(error);
         }
     }
+
+    public async buscarHistoricoServicoPorId (id:string):Promise<string[]|undefined>{
+        try {
+            const user = await this.usuarioRepository.buscarPorId(id)
+            if(!user){
+                throw new CustomError('Histórico não encontrado',404)
+            }
+            return user.historico_servicos
+        } catch (error:unknown) {
+            this.handleError(error)
+        }
+    }
 }

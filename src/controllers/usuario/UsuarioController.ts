@@ -83,10 +83,21 @@ export class UsuarioController {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
-                res
-                    .status(500)
-                    .json({ error: 'Erro desconhecido ao atualizar usuário' });
+                res.status(500).json({ error: 'Erro desconhecido ao atualizar usuário' });
             }
         }
     };
+    public buscarHistoricoDeServicosPorId = async(req:Request,res:Response):Promise <void> =>{
+        try {
+            const {id} = req.params;
+            const historico = await usuarioService.buscarHistoricoServicoPorId(id)
+            res.status(200).json(historico);
+        } catch (error:unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao buscar histórico de serviços' });
+            }
+        }
+    }
 }
