@@ -12,6 +12,7 @@ fornecedorRouter.post('/login', fornecedorController.login);
 // Rotas protegidas
 fornecedorRouter.get('/', fornecedorController.buscarFornecedores);
 fornecedorRouter.get('/:id', fornecedorController.buscarFornecedorPorId);
+fornecedorRouter.get('/categorias/:id',fornecedorController.buscarFornecedorPorCategoria);
 fornecedorRouter.put('/:id', fornecedorController.atualizarFornecedor);
 fornecedorRouter.post('/:id/solicitacao', fornecedorController.adicionarSolicitacao);
 fornecedorRouter.put('/:id/disponibilidade', fornecedorController.atualizarDisponibilidade);

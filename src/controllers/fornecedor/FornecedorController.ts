@@ -75,6 +75,20 @@ export class FornecedorController {
         }
     };
 
+    public buscarFornecedorPorCategoria = async(req:Request,res:Response):Promise<void> =>{
+        try {
+            const {id}=req.params;
+            const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(id)
+            res.status(200).json(fornecedores);
+        } catch (error:unknown) {
+            if(error instanceof CustomError){
+                res.status(error.statusCode).json({error:error.message})
+            }else{
+                res.status(500).json({error:'Erro desconhecido ao buscar'})
+            }
+        }
+    }
+
     public atualizarFornecedor = async (req: Request, res: Response): Promise<void> => {
         try {
             const { id } = req.params;

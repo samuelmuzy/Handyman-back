@@ -102,6 +102,22 @@ export class FornecedorService extends BaseService {
         }
     }
 
+    public async buscarFornecedorPorCategoria (id:string):Promise<typeFornecedor>{
+        try {
+            const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorCategoria(id)
+            if(!fornecedores){
+                throw new CustomError('Categoria inexistente',404)
+            }
+            return fornecedores
+        } catch (error) {
+            if(error instanceof CustomError){
+                throw new CustomError(error.message,error.statusCode)
+            }else{
+                throw new CustomError('Erro desconhecido',500)
+            }
+        }
+    }
+
     public async atualizarFornecedor(id: string, dados: Partial<typeFornecedor>): Promise<IFornecedor> {
         try {
             const fornecedor = await this.fornecedorRepository.buscarFornecedorPorId(id);
