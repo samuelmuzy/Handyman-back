@@ -32,6 +32,30 @@ export class UsuarioController {
         }
     };
 
+    public verificarEmailUsuario = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { email } = req.query;
+    
+            if (typeof email !== 'string') {
+                res.status(400).json({ error: 'Email inválido ou ausente' });
+                return;
+            }
+    
+            const existe = await usuarioService.verificarSeEmailExiste(email);
+    
+            res.status(200).json({ email, existe });
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao verificar email' });
+            }
+        }
+    };
+    
+    
+    
+
     public login = async (req: Request, res: Response): Promise<void> => {
         try {
             const { email, senha } = req.body;

@@ -62,6 +62,15 @@ export class FornecedorService extends BaseService {
         }
     }
 
+    public async verificarSeEmailExiste(email: string): Promise<boolean> {
+        try {
+            const fornecedor = await this.fornecedorRepository.buscarFornecedorPorEmail(email);
+            return !!fornecedor;
+        } catch (error: unknown) {
+            this.handleError(error);
+        }
+    }
+
     public async buscarFornecedores(): Promise<typeFornecedor[]> {
         try {
             const fornecedores = await this.fornecedorRepository.buscarFornecedores();

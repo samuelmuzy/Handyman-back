@@ -8,6 +8,7 @@ const fornecedorController = new FornecedorController();
 // Rotas públicas
 fornecedorRouter.post('/', fornecedorController.criarFornecedor);
 fornecedorRouter.post('/login', fornecedorController.login);
+fornecedorRouter.get('/verificar-email/fornecedor',fornecedorController.verificarEmailFornecedor)
 
 // Rotas protegidas
 fornecedorRouter.get('/', fornecedorController.buscarFornecedores);

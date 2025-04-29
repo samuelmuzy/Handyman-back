@@ -113,6 +113,15 @@ export class UsuarioService extends BaseService {
         }
     }
 
+    public async verificarSeEmailExiste(email: string): Promise<boolean> {
+        try {
+            const usuario = await this.usuarioRepository.buscarEmail(email);
+            return !!usuario;
+        } catch (error: unknown) {
+            this.handleError(error);
+        }
+    }
+    
     public async buscarHistoricoServicoPorId (id:string):Promise<string[]|undefined>{
         try {
             const user = await this.usuarioRepository.buscarPorId(id)
