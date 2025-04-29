@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "aval001",
+    "id_servico": "servico001",
+    "id_usuario": "usuario001",
+    "id_fornecedor": "fornecedor001",
+    "nota": 5,
+    "comentario": "Serviço excelente, resolveu tudo rapidamente e foi super educado.",
+    "data": "2025-04-15T12:30:00Z"
+  },
+  {
+    "_id": "aval002",
+    "id_servico": "servico004",
+    "id_usuario": "usuario004",
+    "id_fornecedor": "fornecedor003",
+    "nota": 4,
+    "comentario": "Montagem bem feita, só atrasou um pouquinho na chegada.",
+    "data": "2025-04-17T13:00:00Z"
+  },
+  {
+    "_id": "aval003",
+    "id_servico": "servico006",
+    "id_usuario": "usuario005",
+    "id_fornecedor": "fornecedor004",
+    "nota": 5,
+    "comentario": "Ótimo técnico, resolveu todos os problemas do computador!",
+    "data": "2025-04-21T15:45:00Z"
+  }
+]

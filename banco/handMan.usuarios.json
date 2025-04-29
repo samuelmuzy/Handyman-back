@@ -1,0 +1,95 @@
+[
+  {
+    "_id": "usuario001",
+    "nome": "Lucas Almeida",
+    "cpf": "123.456.789-09",
+    "email": "lucas.almeida@email.com",
+    "telefone": "11987651234",
+    "senha": "lucas123",
+    "endereco": {
+      "rua": "Rua Azul, 100",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "cep": "01010-000"
+    },
+    "formas_pagamento": [
+      { "tipo": "cartão", "detalhes": "**** **** **** 4321" },
+      { "tipo": "pix", "detalhes": "lucas@email.com" }
+    ],
+    "historico_servicos": ["servico001", "servico002"]
+  },
+  {
+    "_id": "usuario002",
+    "nome": "Fernanda Costa",
+    "cpf": "987.654.321-00",
+    "email": "fernanda.costa@email.com",
+    "telefone": "21998761234",
+    "senha": "fernanda123",
+    "endereco": {
+      "rua": "Rua das Palmeiras, 55",
+      "cidade": "Rio de Janeiro",
+      "estado": "RJ",
+      "cep": "22020-000"
+    },
+    "formas_pagamento": [
+      { "tipo": "boleto", "detalhes": "Banco do Brasil" }
+    ],
+    "historico_servicos": ["servico003"]
+  },
+  {
+    "_id": "usuario003",
+    "nome": "Carlos Henrique",
+    "cpf": "345.678.901-00",
+    "email": "carlos.henrique@email.com",
+    "telefone": "31988887777",
+    "senha": "carlos123",
+    "endereco": {
+      "rua": "Av. Minas, 200",
+      "cidade": "Belo Horizonte",
+      "estado": "MG",
+      "cep": "30110-070"
+    },
+    "formas_pagamento": [
+      { "tipo": "pix", "detalhes": "carlos.pix@bank.com" },
+      { "tipo": "cartão", "detalhes": "**** **** **** 5678" }
+    ],
+    "historico_servicos": []
+  },
+  {
+    "_id": "usuario004",
+    "nome": "Aline Ribeiro",
+    "cpf": "234.567.890-03",
+    "email": "aline.ribeiro@email.com",
+    "telefone": "21991234567",
+    "senha": "aline123",
+    "endereco": {
+      "rua": "Rua das Acácias, 90",
+      "cidade": "Niterói",
+      "estado": "RJ",
+      "cep": "24030-125"
+    },
+    "formas_pagamento": [
+      { "tipo": "pix", "detalhes": "aline.ribeiro@email.com" }
+    ],
+    "historico_servicos": ["servico004"]
+  },
+  {
+    "_id": "usuario005",
+    "nome": "Marcos Souza",
+    "cpf": "654.321.987-01",
+    "email": "marcos.souza@email.com",
+    "telefone": "11994445555",
+    "senha": "marcos123",
+    "endereco": {
+      "rua": "Alameda das Rosas, 321",
+      "cidade": "Campinas",
+      "estado": "SP",
+      "cep": "13010-100"
+    },
+    "formas_pagamento": [
+      { "tipo": "cartão", "detalhes": "**** **** **** 1010" },
+      { "tipo": "boleto", "detalhes": "Caixa Econômica" }
+    ],
+    "historico_servicos": ["servico005", "servico006"]
+  }
+]

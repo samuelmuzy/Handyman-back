@@ -1,5 +1,5 @@
-import { IFornecedor, Fornecedor } from "../../models/fornecedor/Fornecedor";
-import { typeFornecedor } from "../../types/fornecedorType";
+import { IFornecedor, Fornecedor } from '../../models/fornecedor/Fornecedor';
+import { typeFornecedor } from '../../types/fornecedorType';
 
 export class FornecedorRepository {
   private model = new Fornecedor().getModel();

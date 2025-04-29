@@ -1,0 +1,96 @@
+# Sistema de FAQ - Handyman API
+
+## Sobre a Implementação
+Implementação de um sistema de Perguntas Frequentes (FAQ) para a API do Handyman, permitindo o gerenciamento eficiente de informações comuns para usuários e prestadores de serviço.
+
+## Funcionalidades Implementadas
+
+### Estrutura do Banco de Dados
+- Modelo de dados para FAQs com campos:
+  - Identificador único (id)
+  - Pergunta
+  - Resposta
+  - Palavras-chave (opcional)
+  - Data de criação
+
+### Endpoints da API
+- **POST /faq**
+  - Criação de novas FAQs
+  - Campos obrigatórios: pergunta e resposta
+  - Campos opcionais: palavras-chave
+
+- **GET /faq**
+  - Listagem de todas as FAQs
+  - Ordenação por pergunta
+
+- **GET /faq?query=termo**
+  - Busca de FAQs por termo
+  - Busca case-insensitive
+  - Pesquisa em perguntas e palavras-chave
+
+## Exemplo de Uso
+
+### Criar Nova FAQ
+POST /faq
+{
+  "pergunta": "Como faço para pagar minha fatura?",
+  "resposta": "Você pode pagar sua fatura através do nosso app ou internet banking.",
+  "palavrasChave": ["fatura", "pagamento", "app", "internet banking"]
+}
+
+### Buscar FAQs
+GET /faq?query=pagamento
+
+## Tecnologias Utilizadas
+- TypeScript
+- Express
+- MongoDB (Mongoose)
+- Arquitetura MVC
+
+## Estrutura de Arquivos
+src/
+├── models/
+│   └── faq/
+│       └── Faq.ts
+├── repositories/
+│   └── faq/
+│       └── FaqRepository.ts
+├── service/
+│   └── faq/
+│       └── FaqService.ts
+├── controllers/
+│   └── faq/
+│       └── FaqController.ts
+└── routes/
+    └── faq/
+        └── faqRoutes.ts
+
+## Como Testar
+
+### Usando Postman
+1. **Criar FAQ**
+   - Método: POST
+   - URL: http://localhost:3003/faq
+   - Body:
+   {
+     "pergunta": "Como faço para agendar um serviço?",
+     "resposta": "Você pode agendar um serviço através do nosso app ou site.",
+     "palavrasChave": ["agendamento", "serviço", "app", "site"]
+   }
+
+2. **Buscar FAQs**
+   - Método: GET
+   - URL: http://localhost:3003/faq
+   - Query params: ?query=termo
+
+### Validações Implementadas
+- Campos obrigatórios (pergunta e resposta)
+- Formato de dados
+- Tratamento de erros
+- Respostas HTTP apropriadas
+
+## Próximos Passos
+- Implementação de atualização de FAQs
+- Implementação de exclusão de FAQs
+- Adição de categorias para FAQs
+- Sistema de votação para relevância das FAQs 
