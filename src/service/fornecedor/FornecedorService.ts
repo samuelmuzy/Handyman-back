@@ -86,10 +86,10 @@ export class FornecedorService extends BaseService {
         }
     }
 
-    public async buscarFornecedorPorCategoria (id:string):Promise<typeFornecedor>{
+    public async buscarFornecedorPorCategoria (categoria_servico:string):Promise<typeFornecedor[]>{
         try {
-            const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorCategoria(id)
-            if(!fornecedores){
+            const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorCategoria(categoria_servico)
+            if(fornecedores.length===0){
                 throw new CustomError('Categoria inexistente',404)
             }
             return fornecedores

@@ -77,8 +77,8 @@ export class FornecedorController {
 
     public buscarFornecedorPorCategoria = async(req:Request,res:Response):Promise<void> =>{
         try {
-            const {id}=req.params;
-            const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(id)
+            const {categoria_servico}=req.params;
+            const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(categoria_servico)
             res.status(200).json(fornecedores);
         } catch (error:unknown) {
             if(error instanceof CustomError){

@@ -43,9 +43,9 @@ export class FornecedorRepository {
       }
     }
   }
-  public async buscarFornecedoresPorCategoria(id: string) {
+  public async buscarFornecedoresPorCategoria(categoria_servico: string) {
     try {
-      const fornecedores = await this.model.findById({ categoria_servico: id });
+      const fornecedores = await this.model.find({ categoria_servico: categoria_servico });
       return fornecedores;
     } catch (error: unknown) {
         if(error instanceof Error){
