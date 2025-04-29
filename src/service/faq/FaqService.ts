@@ -1,5 +1,6 @@
 import { FaqRepository } from '../../repositories/faq/FaqRepository';
 import { BaseService } from '../BaseService';
+import { CustomError } from '../CustomError';
 
 export class FaqService extends BaseService {
     private repository: FaqRepository;
@@ -20,7 +21,13 @@ export class FaqService extends BaseService {
 
     public async buscarFaqs(query?: string) {
         try {
-            return await this.repository.buscarFaqs(query);
+            const faq = await this.repository.buscarFaqs(query);
+            
+            if(faq.length === 0) {
+                throw new CustomError('Nenhum FAQ encontrado', 404);
+            }
+
+            return faq;
         } catch (error) {
             this.handleError(error);
         }

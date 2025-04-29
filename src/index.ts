@@ -1,7 +1,7 @@
 import { app } from './app';
 import { fornecedorRouter } from './routes/fornecedor/FornecedorRoutes';
 import { usuarioRouter } from './routes/usuario/UsuarioRoutes';
-import faqRouter from './routes/faq/faqRoutes';
+import faqRouter from './routes/faq/FaqRoutes';
 
 app.use('/usuarios', usuarioRouter);
 app.use('/fornecedor', fornecedorRouter);

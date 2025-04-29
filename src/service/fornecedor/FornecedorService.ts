@@ -39,11 +39,7 @@ export class FornecedorService extends BaseService {
 
             return await this.fornecedorRepository.criarFornecedor(fornecedor);
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(`Erro ao criar fornecedor: ${error.message}`, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -62,11 +58,7 @@ export class FornecedorService extends BaseService {
             const token = generateToken({ id: fornecedor.id_fornecedor, role: 'fornecedor' });
             return token;
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -78,11 +70,7 @@ export class FornecedorService extends BaseService {
             }
             return fornecedores;
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -94,11 +82,7 @@ export class FornecedorService extends BaseService {
             }
             return fornecedor;
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -119,11 +103,7 @@ export class FornecedorService extends BaseService {
             }
             return fornecedorAtualizado;
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -136,11 +116,7 @@ export class FornecedorService extends BaseService {
 
             await this.fornecedorRepository.adicionarSolicitacao(id, idSolicitacao);
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -153,11 +129,7 @@ export class FornecedorService extends BaseService {
 
             await this.fornecedorRepository.atualizarDisponibilidade(id, disponibilidade);
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -170,11 +142,7 @@ export class FornecedorService extends BaseService {
 
             await this.fornecedorRepository.atualizarMediaAvaliacoes(id, media);
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -187,11 +155,7 @@ export class FornecedorService extends BaseService {
 
             await this.fornecedorRepository.deletarFornecedor(id);
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 } 

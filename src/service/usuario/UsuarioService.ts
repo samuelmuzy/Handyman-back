@@ -39,14 +39,7 @@ export class UsuarioService extends BaseService {
 
             return await this.usuarioRepository.criarUsuario(usuario);
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(
-                    `Erro ao criar usuário: ${error.message}`,
-                    error.statusCode
-                );
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -55,24 +48,20 @@ export class UsuarioService extends BaseService {
             const user = await this.usuarioRepository.buscarEmail(email);
 
             if (!user) {
-                throw new CustomError('Email não encontrado', 404);
+                throw new CustomError('Email ou senha incorretos', 404);
             }
 
             const senhaCorreta = await compare(senha, user.senha);
 
             if (!senhaCorreta) {
-                throw new CustomError('Senha incorreta', 401);
+                throw new CustomError('Email ou senha incorretos', 401);
             }
 
             const token = generateToken({ id: user.senha, role: user.email });
 
             return token;
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido ao criar usuário', 500);
-            }
+            this.handleError(error);
         }
     }
 
@@ -86,49 +75,41 @@ export class UsuarioService extends BaseService {
 
             return usuarios;
         } catch (error: unknown) {
-            if (error instanceof CustomError) {
-                throw new CustomError(error.message, error.statusCode);
-            } else {
-                throw new CustomError('Erro desconhecido', 500);
-            }
+            this.handleError(error);
         }
     }
+
     public async updateUser(
         id: string,
         user: Partial<typeUsuario>,
         token:string
     ): Promise<IUsuario> {
+        try{
+            const verifyToken = getTokenData(token);
 
-        const verifyToken = getTokenData(token);
+            if(!verifyToken){
+                throw new CustomError('sem autorização',403);
+            }
 
-        if(!verifyToken){
-            throw new CustomError('sem autorização',403);
-        }
-
-        const usuarioExistente = await this.usuarioRepository.buscarPorId(id);
-  
-        if (!usuarioExistente) {
-            throw new CustomError('Usuário não encontrado', 404);
-        }
-  
-        if (user.senha) {
-            user.senha = await hash(user.senha);
-        }
-  
-        const usuarioAtualizado = await this.usuarioRepository.updateUser(id, user);
-  
-        if (!usuarioAtualizado) {
-            throw new CustomError('Erro ao atualizar usuário: registro não encontrado', 404);
-        }
-  
-        return usuarioAtualizado;
-    }
-  
-    catch(error: unknown) {
-        if (error instanceof CustomError) {
-            throw new CustomError(error.message, error.statusCode);
-        } else {
-            throw new CustomError('Erro desconhecido ao atualizar usuário', 500);
+            const usuarioExistente = await this.usuarioRepository.buscarPorId(id);
+    
+            if (!usuarioExistente) {
+                throw new CustomError('Usuário não encontrado', 404);
+            }
+    
+            if (user.senha) {
+                user.senha = await hash(user.senha);
+            }
+    
+            const usuarioAtualizado = await this.usuarioRepository.updateUser(id, user);
+    
+            if (!usuarioAtualizado) {
+                throw new CustomError('Erro ao atualizar usuário: registro não encontrado', 404);
+            }
+    
+            return usuarioAtualizado;
+        }catch(error: unknown) {
+            this.handleError(error);
         }
     }
 }
