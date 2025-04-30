@@ -49,7 +49,7 @@ export class FornecedorController {
     };
     public verificarEmailFornecedor = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { email } = req.query;
+            const email = req.query.query as string | undefined;
 
             if (typeof email !== 'string') {
                 res.status(400).json({ error: 'Email inválido ou ausente' });
@@ -57,6 +57,7 @@ export class FornecedorController {
             }
 
             const existe = await fornecedorService.verificarSeEmailExiste(email);
+
 
             res.status(200).json({ email, existe });
         } catch (error: unknown) {

@@ -65,7 +65,11 @@ export class FornecedorService extends BaseService {
     public async verificarSeEmailExiste(email: string): Promise<boolean> {
         try {
             const fornecedor = await this.fornecedorRepository.buscarFornecedorPorEmail(email);
-            return !!fornecedor;
+
+            if(fornecedor){
+                throw new CustomError('Esse endereço de email já está em uso',404);
+            }
+            return true;
         } catch (error: unknown) {
             this.handleError(error);
         }

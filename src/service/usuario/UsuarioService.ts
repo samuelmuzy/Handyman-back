@@ -116,7 +116,11 @@ export class UsuarioService extends BaseService {
     public async verificarSeEmailExiste(email: string): Promise<boolean> {
         try {
             const usuario = await this.usuarioRepository.buscarEmail(email);
-            return !!usuario;
+            if(usuario){
+                throw new CustomError("Esse endereço de email já está em uso",404);
+            }
+
+            return true;
         } catch (error: unknown) {
             this.handleError(error);
         }
@@ -124,13 +128,13 @@ export class UsuarioService extends BaseService {
     
     public async buscarHistoricoServicoPorId (id:string):Promise<string[]|undefined>{
         try {
-            const user = await this.usuarioRepository.buscarPorId(id)
+            const user = await this.usuarioRepository.buscarPorId(id);
             if(!user){
-                throw new CustomError('Histórico não encontrado',404)
+                throw new CustomError('Histórico não encontrado',404);
             }
-            return user.historico_servicos
+            return user.historico_servicos;
         } catch (error:unknown) {
-            this.handleError(error)
+            this.handleError(error);
         }
     }
 }

@@ -34,7 +34,7 @@ export class UsuarioController {
 
     public verificarEmailUsuario = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { email } = req.query;
+            const email = req.query.query as string | undefined;
     
             if (typeof email !== 'string') {
                 res.status(400).json({ error: 'Email inválido ou ausente' });
