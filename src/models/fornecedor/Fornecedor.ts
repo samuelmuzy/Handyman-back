@@ -35,7 +35,7 @@ export class Fornecedor extends BaseBancoDeDados {
 
     constructor() {
         super();
-        
+
         this.schema = new Schema<IFornecedor>({
             id_fornecedor: { type: String, required: true, unique: true },
             nome: { type: String, required: true },
