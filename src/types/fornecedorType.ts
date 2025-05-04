@@ -20,6 +20,10 @@ export type typeFornecedor = {
     endereco: typeEndereco;
     categoria_servico: string[];
     descricao: string;
+    sub_descricao:string;
+    imagemPerfil:string;
+    imagemIlustrativa:string;
+    valor:number;
     disponibilidade: typeDisponibilidade[];
     solicitacoes: string[];
     media_avaliacoes: number;

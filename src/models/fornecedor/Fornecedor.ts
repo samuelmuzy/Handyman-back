@@ -10,6 +10,10 @@ export interface IFornecedor extends Document {
     senha: string;
     endereco: typeEndereco;
     categoria_servico: string[];
+    valor:number;
+    sub_descricao:string;
+    imagemPerfil:string;
+    imagemIlustrativa:string;
     descricao: string;
     disponibilidade: typeDisponibilidade[];
     solicitacoes: string[];
@@ -43,8 +47,12 @@ export class Fornecedor extends BaseBancoDeDados {
             telefone: { type: String, required: true },
             senha: { type: String, required: true },
             endereco: { type: enderecoSchema, required: true },
+            imagemPerfil: { type:String, default: null },
+            imagemIlustrativa:{ type:String, default:null },
             categoria_servico: [{ type: String, required: true }],
             descricao: { type: String, required: true },
+            sub_descricao: { type:String, required:true },
+            valor:{ type:Number,required:true },
             disponibilidade: [{ type: disponibilidadeSchema, required: true }],
             solicitacoes: [{ type: String }],
             media_avaliacoes: { type: Number, default: 0 }

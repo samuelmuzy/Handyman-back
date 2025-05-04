@@ -2,14 +2,18 @@ import { Request, Response } from 'express';
 import { FornecedorService } from '../../service/fornecedor/FornecedorService';
 import { CustomError } from '../../service/CustomError';
 import { typeFornecedor } from '../../types/fornecedorType';
+import { FornecedorRepository } from '../../repositories/fornecedor/FornecedorRepository';
+import { uploadImagemBuffer } from '../../service/cloudinaryService';
+
 
 const fornecedorService = new FornecedorService();
 
 export class FornecedorController {
     public criarFornecedor = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { nome, email, telefone, senha, endereco, categoria_servico, descricao } = req.body;
-
+            const { nome, email, telefone, senha, endereco, categoria_servico, descricao, valor, sub_descricao } = req.body;
+            
+    
             const fornecedorSalvar: typeFornecedor = {
                 nome,
                 email,
@@ -18,22 +22,86 @@ export class FornecedorController {
                 endereco,
                 categoria_servico,
                 descricao,
+                sub_descricao,
+                valor,
+                imagemPerfil: '',
+                imagemIlustrativa: '', // adiciona a URL no fornecedor
                 disponibilidade: [],
                 solicitacoes: [],
                 media_avaliacoes: 0
             };
-
+    
             const fornecedor = await fornecedorService.criarFornecedor(fornecedorSalvar);
             res.status(201).json(fornecedor);
         } catch (error: unknown) {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
-                res.status(500).json({ error: 'Erro desconhecido ao criar fornecedor' });
+                res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    };
+    // ImagemController.ts
+    public uploadImagemPerfil = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { id_fornecedor } = req.params;
+    
+            const fornecedor = await fornecedorService.buscarFornecedorPorId(id_fornecedor);
+            
+            if (!fornecedor) {
+                res.status(404).json({ error: 'Fornecedor não encontrado' });
+                return;
+            }
+    
+            if (!req.file) {
+                res.status(400).json({ error: 'Imagem não enviada' });
+                return;
+            }
+    
+            const imagemPerfil = await uploadImagemBuffer(req.file.buffer, 'fornecedores');
+
+            await fornecedorService.atualizarFornecedor(id_fornecedor, { imagemPerfil });
+            
+            res.status(200).json({ imagem: imagemPerfil });
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao buscar fornecedor' });
             }
         }
     };
 
+    public uploadImagemIlustrativa = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { id_fornecedor } = req.params;
+    
+            const fornecedor = await fornecedorService.buscarFornecedorPorId(id_fornecedor);
+            
+            if (!fornecedor) {
+                res.status(404).json({ error: 'Fornecedor não encontrado' });
+                return;
+            }
+    
+            if (!req.file) {
+                res.status(400).json({ error: 'Imagem não enviada' });
+                return;
+            }
+    
+            const imagemIlustrativa = await uploadImagemBuffer(req.file.buffer, 'fornecedores');
+
+            await fornecedorService.atualizarFornecedor(id_fornecedor, { imagemIlustrativa });
+            
+            res.status(200).json({ imagem: imagemIlustrativa });
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao buscar fornecedor' });
+            }
+        }
+    };
+    
     public login = async (req: Request, res: Response): Promise<void> => {
         try {
             const { email, senha } = req.body;
@@ -99,16 +167,16 @@ export class FornecedorController {
     public buscarFornecedorPorCategoria = async(req:Request,res:Response):Promise<void> =>{
         try {
             const {categoria_servico}=req.params;
-            const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(categoria_servico)
+            const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(categoria_servico);
             res.status(200).json(fornecedores);
         } catch (error:unknown) {
             if(error instanceof CustomError){
-                res.status(error.statusCode).json({error:error.message})
+                res.status(error.statusCode).json({ error:error.message });
             }else{
-                res.status(500).json({error:'Erro desconhecido ao buscar'})
+                res.status(500).json({ error:'Erro desconhecido ao buscar' });
             }
         }
-    }
+    };
 
     public atualizarFornecedor = async (req: Request, res: Response): Promise<void> => {
         try {
