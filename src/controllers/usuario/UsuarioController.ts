@@ -32,6 +32,28 @@ export class UsuarioController {
         }
     };
 
+    public async criarUsuarioGoogle = async (req: Request, res: Response): Promise<void> =>{
+        try{
+            const { email, name, sub, picture } = req.body;
+
+            const usuario = {
+                nome: name,
+                email,
+                sub,
+                picture,
+            }
+
+            
+            
+        }catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao criar usuário' });
+            }
+        }
+    };
+
     public verificarEmailUsuario = async (req: Request, res: Response): Promise<void> => {
         try {
             const email = req.query.query as string | undefined;

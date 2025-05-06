@@ -127,6 +127,23 @@ export class FornecedorRepository {
     }
   }
 
+    public async adicionarImagensServico(id:string,idImagemServico:string){
+        try {
+            return await this.model.findOneAndUpdate(
+                { id_fornecedor: id },
+                { $push: { imagemServicos: idImagemServico } },
+                { new: true }
+            );
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao adicionar solicitação: ${error.message}`);
+            } else {
+                throw new Error("Erro desconhecido ao adicionar solicitação");
+            }
+        }
+    }
+  
+
   public async atualizarMediaAvaliacoes(id: string, media: number) {
     try {
       return await this.model.findOneAndUpdate(

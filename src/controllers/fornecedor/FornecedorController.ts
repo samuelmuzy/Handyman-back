@@ -41,6 +41,37 @@ export class FornecedorController {
             }
         }
     };
+
+    public uploadImagemServisos = async (req: Request,res:Response):Promise<void> =>{
+        try {
+            const { id_fornecedor } = req.params;
+    
+            const fornecedor = await fornecedorService.buscarFornecedorPorId(id_fornecedor);
+            
+            if (!fornecedor) {
+                res.status(404).json({ error: 'Fornecedor não encontrado' });
+                return;
+            }
+    
+            if (!req.file) {
+                res.status(400).json({ error: 'Imagem não enviada' });
+                return;
+            }
+    
+            const imagemServico = await uploadImagemBuffer(req.file.buffer, 'fornecedores');
+
+            await fornecedorService.adicionarImagensServico(id_fornecedor, imagemServico);
+            
+            res.status(200).json({ imagem: imagemServico });
+        }catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao buscar fornecedor' });
+            }
+        }
+    };
+
     // ImagemController.ts
     public uploadImagemPerfil = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -166,7 +197,7 @@ export class FornecedorController {
 
     public buscarFornecedorPorCategoria = async(req:Request,res:Response):Promise<void> =>{
         try {
-            const {categoria_servico}=req.params;
+            const { categoria_servico } = req.params;
             const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(categoria_servico);
             res.status(200).json(fornecedores);
         } catch (error:unknown) {

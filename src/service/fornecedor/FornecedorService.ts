@@ -149,6 +149,19 @@ export class FornecedorService extends BaseService {
         }
     }
 
+    public async adicionarImagensServico(id:string,idImagemServico:string):Promise<void>{
+        try {
+            const fornecedor = await this.fornecedorRepository.buscarFornecedorPorId(id);
+            if (!fornecedor) {
+                throw new CustomError('Fornecedor não encontrado', 404);
+            }
+
+            await this.fornecedorRepository.adicionarImagensServico(id, idImagemServico);
+        } catch (error: unknown) {
+            this.handleError(error);
+        }
+    }
+
     public async atualizarDisponibilidade(id: string, disponibilidade: any): Promise<void> {
         try {
             const fornecedor = await this.fornecedorRepository.buscarFornecedorPorId(id);

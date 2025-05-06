@@ -1,6 +1,6 @@
 import { Router } from 'express';
 //import Categoria from '../../models/'; // adapte ao caminho correto
-import Fornecedor from '../../models/fornecedor/Fornecedor'; // adapte ao caminho correto
+import {Fornecedor} from '../../models/fornecedor/Fornecedor'; // adapte ao caminho correto
 
 const router = Router();
 
@@ -15,6 +15,7 @@ const router = Router();
 });*/
 
 // Buscar fornecedores de uma categoria específica
+/*
 router.get('/Fornecedores/:idCategoria', async (req, res) => {
     try {
         const { idCategoria } = req.params;
@@ -25,4 +26,4 @@ router.get('/Fornecedores/:idCategoria', async (req, res) => {
     }
 });
 
-export default router;
+export default router;*/

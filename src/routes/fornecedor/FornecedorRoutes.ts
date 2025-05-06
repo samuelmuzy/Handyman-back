@@ -16,6 +16,7 @@ fornecedorRouter.get('/verificar-email/fornecedor',fornecedorController.verifica
 fornecedorRouter.get('/', fornecedorController.buscarFornecedores);
 fornecedorRouter.post('/salvar-imagem-perfil/:id_fornecedor', upload.single("imagem"), fornecedorController.uploadImagemPerfil);
 fornecedorRouter.post('/salvar-imagem-ilustrativa/:id_fornecedor', upload.single("imagem"), fornecedorController.uploadImagemIlustrativa);
+fornecedorRouter.post('/salvar-imagem-servico/:id_fornecedor',upload.single("imagem"),fornecedorController.uploadImagemServisos);
 fornecedorRouter.get('/:id', fornecedorController.buscarFornecedorPorId);
 fornecedorRouter.get('/categorias',fornecedorController.buscarFornecedorPorCategoria);
 fornecedorRouter.put('/:id', fornecedorController.atualizarFornecedor);
