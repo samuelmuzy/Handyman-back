@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { UsuarioService } from '../../service/usuario/UsuarioService';
 import { CustomError } from '../../service/CustomError';
-import { typeUsuario } from '../../types/usuarioType';
+import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
 
 const usuarioService = new UsuarioService();
 
@@ -17,6 +17,7 @@ export class UsuarioController {
                 telefone,
                 formaPagamento: [],
                 endereco,
+                autenticacaoVia: 'local',
                 historico_servicos: [],
             };
 
@@ -32,19 +33,21 @@ export class UsuarioController {
         }
     };
 
-    public async criarUsuarioGoogle = async (req: Request, res: Response): Promise<void> =>{
+    public criarUsuarioGoogle = async (req: Request, res: Response): Promise<void> =>{
         try{
             const { email, name, sub, picture } = req.body;
 
-            const usuario = {
+            const usuarioSalvar:typeUsuarioGoogle = {
                 nome: name,
                 email,
                 sub,
                 picture,
-            }
+                autenticacaoVia: 'google',
+            };
 
+            const usuario = await usuarioService.criarUsuarioGoogle(usuarioSalvar);
             
-            
+            res.status(201).json({ token:usuario });
         }catch (error: unknown) {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
@@ -145,5 +148,5 @@ export class UsuarioController {
                 res.status(500).json({ error: 'Erro desconhecido ao buscar histórico de serviços' });
             }
         }
-    }
+    };
 }

@@ -10,4 +10,5 @@ usuarioRouter.get('/',usuarioController.buscarUsuarios);
 usuarioRouter.get('/verificar-email/usuario',usuarioController.verificarEmailUsuario);
 usuarioRouter.get('/historico/:id',usuarioController.buscarHistoricoDeServicosPorId);
 usuarioRouter.post('/login',usuarioController.login);
+usuarioRouter.post('/login/google',usuarioController.criarUsuarioGoogle);
 usuarioRouter.put('/users/:id',usuarioController.updateUser);

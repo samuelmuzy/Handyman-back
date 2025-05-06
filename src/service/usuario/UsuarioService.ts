@@ -2,7 +2,7 @@ import { compare } from 'bcryptjs';
 import { hash } from '../../middlewares/hashManager';
 import { IUsuario } from '../../models/usuario/Usuario';
 import { UsuarioRepository } from '../../repositories/usuario/UsuarioRepository';
-import { typeUsuario } from '../../types/usuarioType';
+import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
 import { CustomError } from '../CustomError';
 import { generateToken, getTokenData } from '../../middlewares/Authenticator';
 import { BaseService } from '../BaseService';
@@ -38,6 +38,33 @@ export class UsuarioService extends BaseService {
             usuario.senha = await senhaHash;
 
             return await this.usuarioRepository.criarUsuario(usuario);
+        } catch (error: unknown) {
+            this.handleError(error);
+        }
+    }
+
+    public async criarUsuarioGoogle(usuario: typeUsuarioGoogle): Promise<string> {
+        try {
+            this.validateRequiredFields(usuario, [
+                'email',
+                'nome',
+                'sub',
+                'picture',
+            ]);
+
+            const token = generateToken({ id: usuario.picture, role: usuario.email });
+
+            const emailExiste = await this.usuarioRepository.buscarEmail(
+                usuario.email
+            );
+
+            if (emailExiste) {
+                return token;
+            }
+
+            await this.usuarioRepository.criarUsuarioGoogle(usuario);
+
+            return token;
         } catch (error: unknown) {
             this.handleError(error);
         }

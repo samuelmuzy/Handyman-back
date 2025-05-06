@@ -8,6 +8,7 @@ export type typeUsuario = {
     formaPagamento:typeFormaPagamento[];
     endereco:typeEndereco;
     historico_servicos: string[];
+    autenticacaoVia?: string; // 'local' ou 'google'
 }
 
 export type typeFormaPagamento = {
@@ -18,4 +19,12 @@ export type typeFormaPagamento = {
 export type typePagamento = {
     formas_pagamento: typeFormaPagamento[];
 };
+
+export type typeUsuarioGoogle = {
+    email: string;
+    nome: string;
+    sub: string;
+    picture: string;
+    autenticacaoVia: string;
+}
   

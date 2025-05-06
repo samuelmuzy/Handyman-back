@@ -1,10 +1,24 @@
 import { IUsuario, Usuario } from '../../models/usuario/Usuario';
-import { typeUsuario } from '../../types/usuarioType';
+import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
 
 export class UsuarioRepository {
     private model = new Usuario().getModel();
 
     public async criarUsuario(usuario:typeUsuario): Promise<IUsuario> {
+        try {
+            const usuarioSalvar = new this.model( usuario );
+
+            return await usuarioSalvar.save();
+        } catch (error:unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao criar usuário: ${error.message}`);
+            } else {
+                throw new Error('Erro desconhecido ao criar usuário');
+            }
+        }
+    }
+
+    public async criarUsuarioGoogle(usuario:typeUsuarioGoogle): Promise<IUsuario> {
         try {
             const usuarioSalvar = new this.model( usuario );
 

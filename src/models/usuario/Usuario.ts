@@ -11,6 +11,10 @@ export interface IUsuario extends Document {
     formaPagamento:typeFormaPagamento[];
     endereco:typeEndereco;
     historico_servicos: string[];
+    autenticacaoVia: string;
+    sub:string;
+    picture:string
+     // 'local' ou 'google'
 }
 
 const enderecoSchema = new Schema({
@@ -34,13 +38,17 @@ export class Usuario extends BaseBancoDeDados {
         
         this.schema = new Schema<IUsuario>({
             nome: { type: String, required: true },
-            senha: { type: String, required: true },
-            telefone:{ type:String, required:true },
-            email:{ type:String, required:true },
-            formaPagamento: [{ type:formaPagamentoSchema,require:true }],
-            endereco: { type: enderecoSchema, required: true },
-            historico_servicos: [{ type: String }]
+            senha: { type: String, required: false }, // Opcional para Google
+            telefone: { type: String, required: false }, // Opcional
+            email: { type: String, required: true },
+            formaPagamento: [{ type: formaPagamentoSchema, required: false }],
+            endereco: { type: enderecoSchema, required: false },
+            historico_servicos: [{ type: String }],
+            autenticacaoVia: { type: String, enum: ['local', 'google'], default: 'local' },
+            sub: { type: String, required: false }, // Opcional para Google
+            picture: { type: String, required: false } // Opcional para Google
         });
+        
 
         this.model = mongoose.model<IUsuario>('usuarios', this.schema);
         
