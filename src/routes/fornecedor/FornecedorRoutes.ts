@@ -18,7 +18,7 @@ fornecedorRouter.post('/salvar-imagem-perfil/:id_fornecedor', upload.single("ima
 fornecedorRouter.post('/salvar-imagem-ilustrativa/:id_fornecedor', upload.single("imagem"), fornecedorController.uploadImagemIlustrativa);
 fornecedorRouter.post('/salvar-imagem-servico/:id_fornecedor',upload.single("imagem"),fornecedorController.uploadImagemServisos);
 fornecedorRouter.get('/:id', fornecedorController.buscarFornecedorPorId);
-fornecedorRouter.get('/categorias',fornecedorController.buscarFornecedorPorCategoria);
+fornecedorRouter.get('/categorias/:categoria_servico',fornecedorController.buscarFornecedorPorCategoria);
 fornecedorRouter.put('/:id', fornecedorController.atualizarFornecedor);
 fornecedorRouter.post('/:id/solicitacao', fornecedorController.adicionarSolicitacao);
 fornecedorRouter.put('/:id/disponibilidade', fornecedorController.atualizarDisponibilidade);
