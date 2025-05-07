@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UsuarioService } from '../../service/usuario/UsuarioService';
 import { CustomError } from '../../service/CustomError';
 import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
+import { generateId } from '../../middlewares/generateId';
 
 const usuarioService = new UsuarioService();
 
@@ -11,6 +12,7 @@ export class UsuarioController {
             const { nome, email, senha, telefone,endereco } = req.body;
 
             const usuarioSalvar: typeUsuario = {
+                id_usuario:generateId(),
                 nome,
                 email,
                 senha,
@@ -18,6 +20,7 @@ export class UsuarioController {
                 formaPagamento: [],
                 endereco,
                 autenticacaoVia: 'local',
+                role:'usuario',
                 historico_servicos: [],
             };
 
@@ -38,6 +41,7 @@ export class UsuarioController {
             const { email, name, sub, picture } = req.body;
 
             const usuarioSalvar:typeUsuarioGoogle = {
+                id_usuario:generateId(),
                 nome: name,
                 email,
                 sub,
@@ -79,8 +83,6 @@ export class UsuarioController {
     };
     
     
-    
-
     public login = async (req: Request, res: Response): Promise<void> => {
         try {
             const { email, senha } = req.body;
@@ -138,8 +140,8 @@ export class UsuarioController {
     };
     public buscarHistoricoDeServicosPorId = async(req:Request,res:Response):Promise <void> =>{
         try {
-            const {id} = req.params;
-            const historico = await usuarioService.buscarHistoricoServicoPorId(id)
+            const { id } = req.params;
+            const historico = await usuarioService.buscarHistoricoServicoPorId(id);
             res.status(200).json(historico);
         } catch (error:unknown) {
             if (error instanceof CustomError) {

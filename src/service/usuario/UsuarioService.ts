@@ -52,15 +52,19 @@ export class UsuarioService extends BaseService {
                 'picture',
             ]);
 
-            const token = generateToken({ id: usuario.picture, role: usuario.email });
-
+          
             const emailExiste = await this.usuarioRepository.buscarEmail(
                 usuario.email
             );
+            
 
             if (emailExiste) {
+                const token = generateToken({ id: emailExiste.id_usuario, email:usuario.email,imagemPerfil:usuario.picture,nome:usuario.nome, role: usuario.autenticacaoVia });
+                
                 return token;
             }
+
+            const token = generateToken({ id: usuario.id_usuario, email:usuario.email,imagemPerfil:usuario.picture,nome:usuario.nome, role: usuario.autenticacaoVia });
 
             await this.usuarioRepository.criarUsuarioGoogle(usuario);
 
@@ -84,7 +88,7 @@ export class UsuarioService extends BaseService {
                 throw new CustomError('Email ou senha incorretos', 401);
             }
 
-            const token = generateToken({ id: user.senha, role: user.email });
+            const token = generateToken({ id: user.id_usuario, email:user.email,imagemPerfil:user.picture,nome:user.nome, role: user.role });
 
             return token;
         } catch (error: unknown) {
@@ -113,6 +117,7 @@ export class UsuarioService extends BaseService {
     ): Promise<IUsuario> {
         try{
             const verifyToken = getTokenData(token);
+            
 
             if(!verifyToken){
                 throw new CustomError('sem autorização',403);

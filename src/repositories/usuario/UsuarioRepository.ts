@@ -32,10 +32,10 @@ export class UsuarioRepository {
         }
     }
 
-    public async updateUser(id: string, dadosAtualizados: Partial<typeUsuario>): Promise<IUsuario | null> {
+    public async updateUser(id_usuario: string, dadosAtualizados: Partial<typeUsuario>): Promise<IUsuario | null> {
         try {
-            return await this.model.findByIdAndUpdate(
-                id,
+            return await this.model.findOneAndUpdate(
+                { id_usuario }, // busca pelo campo "id_usuario"
                 { $set: dadosAtualizados },
                 { new: true, runValidators: true }
             );
@@ -47,6 +47,7 @@ export class UsuarioRepository {
             }
         }
     }
+    
     
     public async buscarUsuarios() {
         try{
@@ -60,9 +61,9 @@ export class UsuarioRepository {
         }
     }
 
-    public async buscarPorId(id: string): Promise<IUsuario | null> {
+    public async buscarPorId(id_usuario: string): Promise<IUsuario | null> {
         try {
-            return await this.model.findById(id);
+            return await this.model.findOne({ id_usuario }); // busca pelo campo id_usuario
         } catch (error: unknown) {
             if (error instanceof Error) {
                 throw new Error(`Erro ao buscar usuário por ID: ${error.message}`);
@@ -70,7 +71,8 @@ export class UsuarioRepository {
                 throw new Error('Erro desconhecido ao buscar usuário por ID');
             }
         }
-    }    
+    }
+     
 
     public async buscarEmail(email:string){
         try{

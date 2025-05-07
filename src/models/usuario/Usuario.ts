@@ -4,6 +4,7 @@ import { typeEndereco } from '../../types/fornecedorType';
 import { typeFormaPagamento } from '../../types/usuarioType';
 
 export interface IUsuario extends Document {
+    id_usuario:string;
     nome: string;
     senha: string;
     telefone:string;
@@ -14,6 +15,7 @@ export interface IUsuario extends Document {
     autenticacaoVia: string;
     sub:string;
     picture:string
+    role:string
      // 'local' ou 'google'
 }
 
@@ -37,6 +39,7 @@ export class Usuario extends BaseBancoDeDados {
         super();
         
         this.schema = new Schema<IUsuario>({
+            id_usuario: {type:String , require:true},
             nome: { type: String, required: true },
             senha: { type: String, required: false }, // Opcional para Google
             telefone: { type: String, required: false }, // Opcional
@@ -46,7 +49,8 @@ export class Usuario extends BaseBancoDeDados {
             historico_servicos: [{ type: String }],
             autenticacaoVia: { type: String, enum: ['local', 'google'], default: 'local' },
             sub: { type: String, required: false }, // Opcional para Google
-            picture: { type: String, required: false } // Opcional para Google
+            picture: { type: String, required: false }, // Opcional para Google
+            role: { type:String }
         });
         
 

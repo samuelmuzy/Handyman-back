@@ -1,6 +1,7 @@
 import { typeEndereco } from "./fornecedorType";
 
 export type typeUsuario = {
+    id_usuario?:string;
     nome:string;
     email:string;
     senha:string;
@@ -8,7 +9,8 @@ export type typeUsuario = {
     formaPagamento:typeFormaPagamento[];
     endereco:typeEndereco;
     historico_servicos: string[];
-    autenticacaoVia?: string; // 'local' ou 'google'
+    autenticacaoVia?: string;
+    role?:string // 'local' ou 'google'
 }
 
 export type typeFormaPagamento = {
@@ -21,6 +23,7 @@ export type typePagamento = {
 };
 
 export type typeUsuarioGoogle = {
+    id_usuario:string;
     email: string;
     nome: string;
     sub: string;

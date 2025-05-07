@@ -11,7 +11,7 @@ import { mensagemRouter } from './routes/mensagem/mensagemRoutes';
 app.use('/usuarios', usuarioRouter);
 app.use('/fornecedor', fornecedorRouter);
 app.use('/faq', faqRouter);
-app.use('/mensagem',mensagemRouter);
+app.use('/mensagem', mensagemRouter);
 
 // Cria servidor HTTP com Express
 const server = http.createServer(app);
@@ -31,16 +31,19 @@ const mensagemService = new MensagemService();
 io.on('connection', (socket) => {
     console.log('Usuário conectado:', socket.id);
 
-    socket.on('mensagem', async (msg) => {
-        const novaMsg = await mensagemService.enviarMensagem(msg);
-
-        // Emite para ambos os usuários
-        io.to(msg.remetenteId).emit('nova_mensagem', novaMsg);
-        io.to(msg.destinatarioId).emit('nova_mensagem', novaMsg);
+    socket.on('disconnect', () => {
+        console.log('Usuário desconectado:', socket.id);
     });
 
     socket.on('join', (userId) => {
-        socket.join(userId); // Cada usuário entra em sua "sala"
+        socket.join(userId);
+        console.log(`Usuário ${userId} entrou na sala ${userId}`);
+    });
+
+    socket.on('mensagem', async (msg) => {
+        const novaMsg = await mensagemService.enviarMensagem(msg);
+        io.to(msg.remetenteId).emit('nova_mensagem', novaMsg);
+        io.to(msg.destinatarioId).emit('nova_mensagem', novaMsg);
     });
 });
 

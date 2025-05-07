@@ -55,7 +55,8 @@ export class FornecedorService extends BaseService {
                 throw new CustomError('Senha incorreta', 401);
             }
 
-            const token = generateToken({ id: fornecedor.id_fornecedor, role: 'fornecedor' });
+            const token = generateToken({ id: fornecedor.id_fornecedor, email:fornecedor.email,imagemPerfil:fornecedor.imagemPerfil,nome:fornecedor.nome, role: 'Fornecedor' });
+            
             return token;
         } catch (error: unknown) {
             this.handleError(error);
@@ -101,16 +102,16 @@ export class FornecedorService extends BaseService {
 
     public async buscarFornecedorPorCategoria (categoria_servico:string):Promise<typeFornecedor[]>{
         try {
-            const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorCategoria(categoria_servico)
+            const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorCategoria(categoria_servico);
             if(fornecedores.length===0){
-                throw new CustomError('Categoria inexistente',404)
+                throw new CustomError('Categoria inexistente',404);
             }
-            return fornecedores
+            return fornecedores;
         } catch (error) {
             if(error instanceof CustomError){
-                throw new CustomError(error.message,error.statusCode)
+                throw new CustomError(error.message,error.statusCode);
             }else{
-                throw new CustomError('Erro desconhecido',500)
+                throw new CustomError('Erro desconhecido',500);
             }
         }
     }
