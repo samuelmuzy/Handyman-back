@@ -5,6 +5,7 @@ import { CustomError } from '../CustomError';
 import { BaseService } from '../BaseService';
 import { hash, compare } from '../../middlewares/hashManager';
 import { generateToken } from '../../middlewares/Authenticator';
+import { generateId } from '../../middlewares/generateId';
 
 export class FornecedorService extends BaseService {
     private fornecedorRepository: FornecedorRepository;
@@ -14,7 +15,7 @@ export class FornecedorService extends BaseService {
         this.fornecedorRepository = fornecedorRepository || new FornecedorRepository();
     }
 
-    public async criarFornecedor(fornecedor: typeFornecedor): Promise<IFornecedor> {
+    public async criarFornecedor(fornecedor: typeFornecedor): Promise<string> {
         try {
             this.validateRequiredFields(fornecedor, [
                 'nome',
@@ -35,9 +36,13 @@ export class FornecedorService extends BaseService {
             fornecedor.senha = senhaHash;
 
             // Gerar ID único para o fornecedor
-            fornecedor.id_fornecedor = Math.random().toString(36).substring(2, 15);
+            fornecedor.id_fornecedor = generateId();
 
-            return await this.fornecedorRepository.criarFornecedor(fornecedor);
+            const token = generateToken({ id: fornecedor.id_fornecedor, email:fornecedor.email,imagemPerfil:fornecedor.imagemPerfil,nome:fornecedor.nome, role: 'Fornecedor' });
+
+            await this.fornecedorRepository.criarFornecedor(fornecedor);
+
+            return token;
         } catch (error: unknown) {
             this.handleError(error);
         }

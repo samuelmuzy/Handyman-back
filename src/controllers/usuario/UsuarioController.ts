@@ -112,6 +112,21 @@ export class UsuarioController {
         }
     };
 
+    public buscarUsuariosPorId = async (req: Request,res: Response): Promise<void> => {
+        try {
+            const { id } = req.params;
+
+            const usuarios = await usuarioService.buscarUsuarioPorId(id);
+            res.status(200).json(usuarios);
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao criar usuário' });
+            }
+        }
+    };
+
     public updateUser = async (req: Request, res: Response): Promise<void> => {
         try {
             const { id } = req.params;

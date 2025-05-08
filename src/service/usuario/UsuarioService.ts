@@ -52,7 +52,6 @@ export class UsuarioService extends BaseService {
                 'picture',
             ]);
 
-          
             const emailExiste = await this.usuarioRepository.buscarEmail(
                 usuario.email
             );
@@ -101,6 +100,20 @@ export class UsuarioService extends BaseService {
             const usuarios = await this.usuarioRepository.buscarUsuarios();
 
             if (usuarios.length === 0) {
+                throw new CustomError('Nenhum usuário encontrado', 404);
+            }
+
+            return usuarios;
+        } catch (error: unknown) {
+            this.handleError(error);
+        }
+    }
+
+    public async buscarUsuarioPorId(id:string): Promise<IUsuario> {
+        try {
+            const usuarios = await this.usuarioRepository.buscarPorId(id);
+
+            if (!usuarios) {
                 throw new CustomError('Nenhum usuário encontrado', 404);
             }
 
