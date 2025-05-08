@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
 
 // Inicia o servidor
 const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => {
+// app para local
+server.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
