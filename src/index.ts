@@ -48,6 +48,7 @@ io.on('connection', (socket) => {
 });
 
 // Inicia o servidor
-server.listen(3003, () => {
-    console.log('Servidor rodando em http://localhost:3003');
+const PORT = process.env.PORT || 3003;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
