@@ -48,7 +48,9 @@ io.on('connection', (socket) => {
 });
 
 // Inicia o servidor
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3000;
+console.log("Porta fornecida pelo Railway:", process.env.PORT);
+
 // Usar server.listen() para iniciar o servidor
 server.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
