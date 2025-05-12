@@ -25,5 +25,16 @@ export const MensagemController = {
         } catch (error) {
             res.status(500).json({ erro: 'Erro ao buscar mensagens.' });
         }
+    },
+
+    async buscarDestinatarios(req: Request, res: Response) {
+        const { usuarioId } = req.params;
+
+        try {
+            const mensagens = await service.buscarDestinatarios(usuarioId);
+            res.status(200).json(mensagens);
+        } catch (error) {
+            res.status(500).json({ erro: 'Erro ao buscar mensagens.' });
+        }
     }
 };

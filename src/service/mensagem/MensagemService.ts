@@ -12,4 +12,10 @@ export class MensagemService {
     async listarConversas(usuario1: string, usuario2: string): Promise<IMensagem[]> {
         return await this.repository.buscarConversas(usuario1, usuario2);
     }
+
+    async buscarDestinatarios(usuarioId:string){
+        // No seu controller ou service
+        const destinatarios = await this.repository.buscarDestinatarios(usuarioId);
+        return destinatarios;
+    }
 }

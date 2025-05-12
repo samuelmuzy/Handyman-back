@@ -15,4 +15,25 @@ export class MensagemRepository {
             ]
         }).sort({ dataEnvio: 1 });
     }
+
+    async buscarDestinatarios(remetenteId: string): Promise<string[]> {
+        const mensagens = await MensagemModel.find({
+            $or: [
+                { remetenteId },
+                { destinatarioId: remetenteId }
+            ]
+        });
+
+        const destinatarios = new Set<string>();
+        
+        mensagens.forEach(mensagem => {
+            if (mensagem.remetenteId === remetenteId) {
+                destinatarios.add(mensagem.destinatarioId);
+            } else {
+                destinatarios.add(mensagem.remetenteId);
+            }
+        });
+
+        return Array.from(destinatarios);
+    }
 }
