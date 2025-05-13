@@ -2,7 +2,7 @@ import { IFornecedor, Fornecedor } from '../../models/fornecedor/Fornecedor';
 import { typeFornecedor } from '../../types/fornecedorType';
 
 export class FornecedorRepository {
-  private model = new Fornecedor().getModel();
+  private model = Fornecedor.getInstance().getModel();
 
   public async criarFornecedor(
     fornecedor: typeFornecedor

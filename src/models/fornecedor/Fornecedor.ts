@@ -35,10 +35,11 @@ const disponibilidadeSchema = new Schema({
 });
 
 export class Fornecedor extends BaseBancoDeDados {
+    private static instance: Fornecedor;
     private schema: Schema<IFornecedor>;
     private model;
 
-    constructor() {
+    private constructor() {
         super();
 
         this.schema = new Schema<IFornecedor>({
@@ -60,7 +61,18 @@ export class Fornecedor extends BaseBancoDeDados {
             media_avaliacoes: { type: Number, default: 0 }
         });
 
-        this.model = mongoose.model<IFornecedor>('fornecedores', this.schema);
+        try {
+            this.model = mongoose.model<IFornecedor>('fornecedores', this.schema);
+        } catch (error) {
+            this.model = mongoose.model<IFornecedor>('fornecedores');
+        }
+    }
+
+    public static getInstance(): Fornecedor {
+        if (!Fornecedor.instance) {
+            Fornecedor.instance = new Fornecedor();
+        }
+        return Fornecedor.instance;
     }
 
     public getModel() {

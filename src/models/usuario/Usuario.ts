@@ -32,10 +32,11 @@ const formaPagamentoSchema = new Schema({
 });
 
 export class Usuario extends BaseBancoDeDados {
+    private static instance: Usuario;
     private schema: Schema<IUsuario>;
     private model;
 
-    constructor() {
+    private constructor() {
         super();
         
         this.schema = new Schema<IUsuario>({
@@ -54,8 +55,18 @@ export class Usuario extends BaseBancoDeDados {
         });
         
 
-        this.model = mongoose.model<IUsuario>('usuarios', this.schema);
-        
+        try {
+            this.model = mongoose.model<IUsuario>('usuarios', this.schema);
+        } catch (error) {
+            this.model = mongoose.model<IUsuario>('usuarios');
+        }
+    }
+
+    public static getInstance(): Usuario {
+        if (!Usuario.instance) {
+            Usuario.instance = new Usuario();
+        }
+        return Usuario.instance;
     }
 
     public getModel() {

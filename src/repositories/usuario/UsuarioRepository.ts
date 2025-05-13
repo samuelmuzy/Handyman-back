@@ -2,7 +2,8 @@ import { IUsuario, Usuario } from '../../models/usuario/Usuario';
 import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
 
 export class UsuarioRepository {
-    private model = new Usuario().getModel();
+
+    private model = Usuario.getInstance().getModel();
 
     public async criarUsuario(usuario:typeUsuario): Promise<IUsuario> {
         try {
