@@ -30,12 +30,9 @@ export class MensagemService extends BaseService  {
                 throw new CustomError('sem autorização', 403);
             }
     
-            if(verifyToken.id !== idUsuario){
-                throw new CustomError('sem autorização', 403);
-            }
     
             const usuarios = await this.repository.buscarUsuariosConversa(idUsuario);
-            return usuarios
+            return usuarios;
 
         }catch(error){
             this.handleError(error);

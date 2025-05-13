@@ -43,7 +43,7 @@ export class MensagemRepository {
         });
 
         const destinatarios = new Set<string>();
-        
+
         mensagens.forEach(mensagem => {
             if (mensagem.remetenteId === remetenteId) {
                 destinatarios.add(mensagem.destinatarioId);
@@ -58,17 +58,30 @@ export class MensagemRepository {
     async buscarUsuariosConversa(idUsuario: string) {
         const destinatariosIds = await this.buscarDestinatarios(idUsuario);
 
-        // Busca usuários e fornecedores que conversaram com o usuário
         const [usuarios, fornecedores] = await Promise.all([
-            this.modelUsuario.find({
-                id_usuario: { $in: destinatariosIds }
-            }),
-            this.modelFornecedor.find({
-                id_fornecedor: { $in: destinatariosIds }
-            })
+            this.modelUsuario.find(
+                { id_usuario: { $in: destinatariosIds } },
+            ).select('id_usuario nome picture'),
+
+            this.modelFornecedor.find(
+                { id_fornecedor: { $in: destinatariosIds } },
+            ).select('id_fornecedor nome imagemPerfil')
         ]);
 
+        const fornecedorRenomeados = fornecedores.map(f => ({
+            id: f.id_fornecedor,
+            nome: f.nome,
+            picture: f.imagemPerfil
+        }));
+
+        const usuariosRenomeados = usuarios.map(u => ({
+            id: u.id_usuario,
+            nome: u.nome,
+            picture: u.picture
+        }));
+
+
         // Combina os resultados em um único array
-        return [...usuarios, ...fornecedores];
+        return [...usuariosRenomeados, ...fornecedorRenomeados];
     }
 }
