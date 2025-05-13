@@ -10,6 +10,7 @@ export type typeUsuario = {
     endereco:typeEndereco;
     historico_servicos: string[];
     autenticacaoVia?: string;
+    picture?: string;
     role?:string // 'local' ou 'google'
 }
 

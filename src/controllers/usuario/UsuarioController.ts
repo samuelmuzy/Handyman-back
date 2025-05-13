@@ -3,6 +3,8 @@ import { UsuarioService } from '../../service/usuario/UsuarioService';
 import { CustomError } from '../../service/CustomError';
 import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
 import { generateId } from '../../middlewares/generateId';
+import { uploadImagemBuffer } from '../../service/cloudinaryService';
+import { getTokenData } from '../../middlewares/Authenticator';
 
 const usuarioService = new UsuarioService();
 
@@ -57,6 +59,45 @@ export class UsuarioController {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
                 res.status(500).json({ error: 'Erro desconhecido ao criar usuário' });
+            }
+        }
+    };
+
+    public uploadImagemPerfil = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { id_usuario } = req.params;
+
+            const token = req.headers.authorization!;
+
+            const verifyToken = getTokenData(token);
+            
+
+            if(!verifyToken){
+                throw new CustomError('sem autorização',403);
+            }
+    
+            const usuario = await usuarioService.buscarUsuarioPorId(id_usuario);
+            
+            if (!usuario) {
+                res.status(404).json({ error: 'Fornecedor não encontrado' });
+                return;
+            }
+    
+            if (!req.file) {
+                res.status(400).json({ error: 'Imagem não enviada' });
+                return;
+            }
+    
+            const picture = await uploadImagemBuffer(req.file.buffer, 'fornecedores');
+
+            await usuarioService.updateUser(id_usuario, { picture },token);
+            
+            res.status(200).json({ imagem: picture });
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao buscar fornecedor' });
             }
         }
     };
