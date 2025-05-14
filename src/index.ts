@@ -6,12 +6,14 @@ import { usuarioRouter } from './routes/usuario/UsuarioRoutes';
 import faqRouter from './routes/faq/FaqRoutes';
 import { MensagemService } from './service/mensagem/MensagemService';
 import { mensagemRouter } from './routes/mensagem/mensagemRoutes';
+import { pagamentoRouter } from './routes/pagamento/PagamentoRouter';
 
 // Rotas
 app.use('/usuarios', usuarioRouter);
 app.use('/fornecedor', fornecedorRouter);
 app.use('/faq', faqRouter);
 app.use('/mensagem', mensagemRouter);
+app.use('/pagamento',pagamentoRouter);
 
 // Cria servidor HTTP com Express
 const server = http.createServer(app);
