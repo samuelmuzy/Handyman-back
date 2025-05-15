@@ -6,4 +6,4 @@ export const pagamentoRouter = express.Router();
 const pagamentoController = new PagamentoController();
 
 pagamentoRouter.post('/pix',pagamentoController.pagarComPix);
-pagamentoRouter.post('/cartao',pagamentoController.pagarComCartao);
+pagamentoRouter.post('/criar-preferencia',pagamentoController.criarPreferencia);
