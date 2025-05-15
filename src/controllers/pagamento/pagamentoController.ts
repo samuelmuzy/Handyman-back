@@ -8,7 +8,7 @@ dotenv.config();
 
 const client = new MercadoPagoConfig({
     accessToken: process.env.TOKEN_MERCADO_PAGO as string,
-  });
+});
   
   
 const payment = new Payment(client);
@@ -18,17 +18,28 @@ export class PagamentoController {
  // POST /criar-preferencia
 public criarPreferencia = async (req: Request, res: Response) => {
   try {
+    const { title, quantity, unit_price, payer } = req.body;
+
     const preference = new Preference(client);
+
     const result = await preference.create({
       body: {
         items: [
           {
-            id:generateId(),
-            title: 'Produto Teste',
-            quantity: 1,
-            unit_price: 100,
+            id: generateId(),
+            title: title || 'Produto Teste',
+            quantity: quantity || 1,
+            unit_price: unit_price || 1,
           },
         ],
+        payer: {
+          name: payer?.name,
+          email: payer?.email,
+          identification: {
+            type: payer?.identification?.type || 'CPF',
+            number: payer?.identification?.number || '',
+          },
+        },
         back_urls: {
           success: 'https://handymanssfront.vercel.app/servicos',
           failure: 'https://handymanssfront.vercel.app/',
