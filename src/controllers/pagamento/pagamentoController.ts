@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Payment, MercadoPagoConfig } from 'mercadopago';
+import { Payment, MercadoPagoConfig, Preference } from 'mercadopago';
 import dotenv from 'dotenv';
 import { generateId } from '../../middlewares/generateId';
 import axios from 'axios';
@@ -15,48 +15,35 @@ const payment = new Payment(client);
 
 export class PagamentoController {
     
-  // Pagamento com Cartão
-  public pagarComCartao = async (req: Request, res: Response) => {
-    try {
-      const {
-        transaction_amount,
-        token,
-        description,
-        installments,
-        paymentMethodId,
-        issuer,
-        email,
-        identificationType,
-        number,
-      } = req.body;
-
-      const result = await payment.create({
-        body: {
-          transaction_amount,
-          token,
-          description,
-          installments,
-          payment_method_id: paymentMethodId,
-          issuer_id: issuer,
-          payer: {
-            email,
-            identification: {
-              type: identificationType,
-              number,
-            },
+ // POST /criar-preferencia
+public criarPreferencia = async (req: Request, res: Response) => {
+  try {
+    const preference = new Preference(client);
+    const result = await preference.create({
+      body: {
+        items: [
+          {
+            id:generateId(),
+            title: 'Produto Teste',
+            quantity: 1,
+            unit_price: 100,
           },
+        ],
+        back_urls: {
+          success: 'https://handymanssfront.vercel.app/servicos',
+          failure: 'https://handymanssfront.vercel.app/',
+          pending: 'https://handymanssfront.vercel.app/sobre-nos',
         },
-        requestOptions: {
-          idempotencyKey: generateId(), // Garante idempotência
-        },
-      });
+        auto_return: 'approved',
+      },
+    });
 
-      res.status(200).json(result);
-    } catch (error: any) {
-      console.error('Erro no pagamento com cartão:', error);
-      res.status(500).json({ error: error.message });
-    }
-  };
+    res.status(200).json({ init_point: result.init_point }); // URL para redirecionar
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
   // Pagamento com PIX
   public pagarComPix = async (req: Request, res: Response) => {
