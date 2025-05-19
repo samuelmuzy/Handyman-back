@@ -6,9 +6,17 @@ import { typeUsuario, typeUsuarioGoogle } from '../../types/usuarioType';
 import { CustomError } from '../CustomError';
 import { generateToken, getTokenData } from '../../middlewares/Authenticator';
 import { BaseService } from '../BaseService';
+import { ServicoRepository } from '../../repositories/servicoAgendado/ServivoRepository';
+import { FornecedorRepository } from '../../repositories/fornecedor/FornecedorRepository';
+import { Iservico } from '../../models/servicoAgendado/Servico';
+import { ServicoComFornecedor } from '../../types/servicoType';
 
 export class UsuarioService extends BaseService {
     private usuarioRepository: UsuarioRepository;
+
+    private servicoRepository = new ServicoRepository();
+
+    private fornecedorRepository = new FornecedorRepository();
 
     constructor(usuarioRepository?: UsuarioRepository) {
         super();
@@ -171,13 +179,21 @@ export class UsuarioService extends BaseService {
         }
     }
     
-    public async buscarHistoricoServicoPorId (id:string):Promise<string[]|undefined>{
+    public async buscarHistoricoServicoPorId (id:string):Promise<ServicoComFornecedor[] | null>{
         try {
             const user = await this.usuarioRepository.buscarPorId(id);
+            
             if(!user){
-                throw new CustomError('Histórico não encontrado',404);
+                throw new CustomError('Usuário não encontrado',404);
             }
-            return user.historico_servicos;
+
+            const servicos = await this.servicoRepository.buscarServicosPorUsuarioId(id);
+
+            if(!servicos || servicos.length === 0){
+                throw new CustomError('Nenhum serviço encontrado',404);
+            }
+
+            return servicos;
         } catch (error:unknown) {
             this.handleError(error);
         }
