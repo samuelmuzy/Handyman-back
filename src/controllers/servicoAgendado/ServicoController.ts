@@ -1,0 +1,56 @@
+import { Request, Response } from "express";
+import { CustomError } from "../../service/CustomError";
+import { ServicoService } from "../../service/servicoAgendado/ServicoService";
+import { typeServico } from "../../types/servicoType";
+import { generateId } from "../../middlewares/generateId";
+
+export class ServicoController{
+    private servicoService = new ServicoService();
+    public criarServico = async (req: Request, res: Response) => {
+        try{
+            const {
+                id_usuario,
+                id_fornecedor,
+                categoria,
+                data,
+                horario,
+                status,
+                id_pagamento,
+                id_avaliacao
+            } = req.body;
+
+            // Validação das datas
+            const dataServico = new Date(data);
+            const horarioServico = new Date(horario);
+
+            if (isNaN(dataServico.getTime())) {
+                throw new CustomError("Data inválida", 400);
+            }
+
+            if (isNaN(horarioServico.getTime())) {
+                throw new CustomError("Horário inválido", 400);
+            }
+
+            const servicoBody: typeServico = {
+                id_servico: generateId(),
+                id_usuario,
+                id_fornecedor,
+                categoria,
+                data: dataServico,
+                horario: horarioServico,
+                status,
+                id_pagamento,
+                id_avaliacao
+            };
+
+            const servico = await this.servicoService.criarServico(servicoBody);
+            res.status(201).json(servico);
+        }catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    };
+}
