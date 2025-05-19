@@ -10,12 +10,14 @@ export interface Iservico extends Document {
   status: string;
   id_pagamento: string;
   id_avaliacao: string;
+  descricao:string;
 }
 
 const ServicoSchema = new Schema<Iservico>({
   id_servico: { type: String, required: true },
   id_usuario: { type: String, required: true },
   id_fornecedor: { type: String, required: true },
+  descricao: { type:String , require:true},
   categoria: { type: String, required: true },
   data: { type: Date, required: true },
   horario: { type: Date, required: true },

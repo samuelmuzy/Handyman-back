@@ -14,7 +14,7 @@ export class ServicoService extends BaseService {
     //Salva a soliçitação na tabela de serviços e também adiciona o id da tabela serviços ao fornecedor
     public async criarServico(servico:typeServico):Promise<Iservico>{
         try{
-            this.validateRequiredFields(servico,['id_fornecedor','id_usuario','status','categoria','data','horario'])
+            this.validateRequiredFields(servico,['id_fornecedor','id_usuario','status','categoria','data','horario','descricao'])
 
             const fornecedorExiste = await this.fornecedorRepository.buscarFornecedorPorId(servico.id_fornecedor);
 

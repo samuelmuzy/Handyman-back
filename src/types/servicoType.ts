@@ -8,4 +8,5 @@ export type typeServico = {
     status: string,
     id_pagamento: string,
     id_avaliacao: string
+    descricao:string;
 }

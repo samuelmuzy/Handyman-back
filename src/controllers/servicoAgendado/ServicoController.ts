@@ -16,7 +16,8 @@ export class ServicoController{
                 horario,
                 status,
                 id_pagamento,
-                id_avaliacao
+                id_avaliacao,
+                descricao
             } = req.body;
 
             // Validação das datas
@@ -40,7 +41,8 @@ export class ServicoController{
                 horario: horarioServico,
                 status,
                 id_pagamento,
-                id_avaliacao
+                id_avaliacao,
+                descricao
             };
 
             const servico = await this.servicoService.criarServico(servicoBody);

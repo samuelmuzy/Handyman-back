@@ -137,7 +137,7 @@ export class FornecedorController {
         try {
             const { email, senha } = req.body;
             const token = await fornecedorService.login(email, senha);
-            res.status(200).json({ token });
+            res.status(200).json({ token: token });
         } catch (error: unknown) {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
