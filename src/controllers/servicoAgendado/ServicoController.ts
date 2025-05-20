@@ -55,4 +55,20 @@ export class ServicoController{
             }
         }
     };
+
+    public atualizarStatus = async (req: Request, res: Response) => {
+        try{
+            const { id_servico,status } = req.body;
+
+            const dados = await this.servicoService.atualizarStatus(id_servico,{ status });
+
+            res.status(200).send(dados);
+        }catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    };
 }

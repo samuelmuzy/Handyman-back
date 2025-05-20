@@ -14,12 +14,12 @@ export class ServicoService extends BaseService {
     //Salva a soliçitação na tabela de serviços e também adiciona o id da tabela serviços ao fornecedor
     public async criarServico(servico:typeServico):Promise<Iservico>{
         try{
-            this.validateRequiredFields(servico,['id_fornecedor','id_usuario','status','categoria','data','horario','descricao'])
+            this.validateRequiredFields(servico,['id_fornecedor','id_usuario','status','categoria','data','horario','descricao']);
 
             const fornecedorExiste = await this.fornecedorRepository.buscarFornecedorPorId(servico.id_fornecedor);
 
             if(!fornecedorExiste){
-                throw new CustomError('Fornecedor não encontrado', 404)
+                throw new CustomError('Fornecedor não encontrado', 404);
             }
             
             const usuarioExiste = await this.usuarioRepository.buscarPorId(servico.id_usuario);
@@ -32,6 +32,20 @@ export class ServicoService extends BaseService {
 
             return await this.servicoRepository.criarServico(servico);
 
+        }catch(error){
+            this.handleError(error);
+        }
+    }
+
+    public async atualizarStatus(id_servico:string,dadosAtualizados:Partial<typeServico>){
+        try{
+            const servico = await  this.servicoRepository.atualizarStatus(id_servico,dadosAtualizados);
+
+            if(!servico){
+                throw new CustomError('Servico não encontrado',404);
+            }
+
+            return servico;
         }catch(error){
             this.handleError(error);
         }

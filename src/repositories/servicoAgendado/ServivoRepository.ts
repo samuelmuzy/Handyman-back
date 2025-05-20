@@ -63,4 +63,21 @@ export class ServicoRepository {
             }
         }
     }
+
+    public async atualizarStatus(id_servico:string,dadosAtualizados:Partial<typeServico>){
+        try {
+            return await ServicoModel.findOneAndUpdate(
+                { id_servico }, // busca pelo campo "id_usuario"
+                { $set: dadosAtualizados},
+                { new: true, runValidators: true }
+            );
+
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao alterar status: ${error.message}`);
+            } else {
+                throw new Error("Erro desconhecido ao alterar status");
+            }
+        }
+    }
 }
