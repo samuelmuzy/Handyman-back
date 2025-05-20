@@ -1,8 +1,12 @@
 import { IFornecedor, Fornecedor } from '../../models/fornecedor/Fornecedor';
 import { typeFornecedor } from '../../types/fornecedorType';
+import { ServicoModel } from '../../models/servicoAgendado/Servico';
+import { Usuario } from '../../models/usuario/Usuario';
 
 export class FornecedorRepository {
   private model = Fornecedor.getInstance().getModel();
+  private servicoModel = ServicoModel;
+  private usuarioModel = Usuario.getInstance().getModel();
 
   public async criarFornecedor(
     fornecedor: typeFornecedor
@@ -158,6 +162,49 @@ export class FornecedorRepository {
         );
       } else {
         throw new Error("Erro desconhecido ao atualizar média de avaliações");
+      }
+    }
+  }
+
+  public async buscarSolicitacoesPorIdFornecedor(id_fornecedor: string) {
+    try {
+      // Buscar todos os serviços do fornecedor
+      const servicos = await this.servicoModel.find({ id_fornecedor });
+
+      // Para cada serviço, buscar os dados do usuário
+      const servicosComUsuario = await Promise.all(
+        servicos.map(async (servico) => {
+          const usuario = await this.usuarioModel.findOne({ 
+            id_usuario: servico.id_usuario 
+          });
+
+          return {
+            servico: {
+              id_servico: servico.id_servico,
+              categoria: servico.categoria,
+              data: servico.data,
+              horario: servico.horario,
+              status: servico.status,
+              descricao: servico.descricao,
+              id_pagamento: servico.id_pagamento,
+              id_avaliacao: servico.id_avaliacao
+            },
+            usuario: usuario ? {
+              nome: usuario.nome,
+              email: usuario.email,
+              telefone: usuario.telefone,
+              picture: usuario.picture
+            } : null
+          };
+        })
+      );
+
+      return servicosComUsuario;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Erro ao buscar solicitações: ${error.message}`);
+      } else {
+        throw new Error("Erro desconhecido ao buscar solicitações");
       }
     }
   }

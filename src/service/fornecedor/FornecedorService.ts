@@ -206,4 +206,24 @@ export class FornecedorService extends BaseService {
             this.handleError(error);
         }
     }
+
+    public async buscarSolicitacoesFornecedor(id_fornecedor: string) {
+        try {
+            const fornecedor = await this.fornecedorRepository.buscarFornecedorPorId(id_fornecedor);
+            
+            if (!fornecedor) {
+                throw new CustomError('Fornecedor não encontrado', 404);
+            }
+
+            const solicitacoes = await this.fornecedorRepository.buscarSolicitacoesPorIdFornecedor(id_fornecedor);
+
+            if (!solicitacoes || solicitacoes.length === 0) {
+                throw new CustomError('Nenhuma solicitação encontrada', 404);
+            }
+
+            return solicitacoes;
+        } catch (error: unknown) {
+            this.handleError(error);
+        }
+    }
 } 

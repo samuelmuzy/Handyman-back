@@ -286,4 +286,14 @@ export class FornecedorController {
             }
         }
     };
+
+    public buscarSolicitacoes = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const solicitacoes = await fornecedorService.buscarSolicitacoesFornecedor(id);
+            res.status(200).json(solicitacoes);
+        } catch (error: any) {
+            res.status(error.statusCode || 500).json({ message: error.message });
+        }
+    }
 } 
