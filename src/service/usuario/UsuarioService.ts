@@ -86,7 +86,11 @@ export class UsuarioService extends BaseService {
             const user = await this.usuarioRepository.buscarEmail(email);
 
             if (!user) {
-                throw new CustomError('Email ou senha incorretos', 404);
+                throw new CustomError('Email ou senha incorretos', 401);
+            }
+
+            if (!user.senha) {
+                throw new CustomError('Email ou senha incorretos', 401);
             }
 
             const senhaCorreta = await compare(senha, user.senha);
@@ -95,7 +99,13 @@ export class UsuarioService extends BaseService {
                 throw new CustomError('Email ou senha incorretos', 401);
             }
 
-            const token = generateToken({ id: user.id_usuario, email:user.email,imagemPerfil:user.picture,nome:user.nome, role: user.role });
+            const token = generateToken({ 
+                id: user.id_usuario, 
+                email: user.email,
+                imagemPerfil: user.picture,
+                nome: user.nome, 
+                role: user.role 
+            });
 
             return token;
         } catch (error: unknown) {
