@@ -50,4 +50,13 @@ export class ServicoService extends BaseService {
             this.handleError(error);
         }
     }
+
+    public async buscarServico(idServico:string){
+        try{
+            const servico = await this.servicoRepository.buscarServico(idServico);
+            return servico;
+        }catch(error){
+            this.handleError(error);
+        }
+    }
 }

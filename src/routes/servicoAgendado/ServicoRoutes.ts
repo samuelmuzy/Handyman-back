@@ -7,3 +7,4 @@ const servicoController = new ServicoController();
 
 servicoRouter.post('/',servicoController.criarServico);
 servicoRouter.put('/',servicoController.atualizarStatus);
+servicoRouter.get('/:idServico',servicoController.buscarServico);

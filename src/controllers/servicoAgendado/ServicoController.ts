@@ -71,4 +71,20 @@ export class ServicoController{
             }
         }
     };
+
+    public buscarServico = async (req: Request, res: Response) => {
+        try{
+            const { idServico } = req.params;
+
+            const dados = await this.servicoService.buscarServico(idServico);
+
+            res.status(200).send(dados);
+        }catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    };
 }

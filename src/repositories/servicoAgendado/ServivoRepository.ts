@@ -80,4 +80,46 @@ export class ServicoRepository {
             }
         }
     }
+
+    public async buscarServico(id_servico: string): Promise<ServicoComFornecedor | null> {
+        try {
+            const servico = await ServicoModel.findOne({ id_servico });
+            
+            if (!servico) {
+                return null;
+            }
+
+            const fornecedor = await this.fornecedorModel.findOne({ 
+                id_fornecedor: servico.id_fornecedor 
+            });
+            
+            const servicoObj = servico.toObject();
+            
+            return {
+                id_servico: servicoObj.id_servico,
+                id_usuario: servicoObj.id_usuario,
+                categoria: servicoObj.categoria,
+                data: servicoObj.data,
+                horario: servicoObj.horario,
+                status: servicoObj.status,
+                id_pagamento: servicoObj.id_pagamento,
+                id_avaliacao: servicoObj.id_avaliacao,
+                descricao: servicoObj.descricao,
+                fornecedor: fornecedor ? {
+                    nome: fornecedor.nome,
+                    email: fornecedor.email,
+                    telefone: fornecedor.telefone,
+                    categoria_servico: fornecedor.categoria_servico,
+                    media_avaliacoes: fornecedor.media_avaliacoes
+                } : null
+            };
+
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao buscar serviço: ${error.message}`);
+            } else {
+                throw new Error("Erro desconhecido ao buscar serviço");
+            }
+        }
+    }
 }
