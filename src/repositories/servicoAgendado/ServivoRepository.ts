@@ -35,6 +35,7 @@ export class ServicoRepository {
                     return {
                         id_servico: servicoObj.id_servico,
                         id_usuario: servicoObj.id_usuario,
+                        id_fornecedor:servicoObj.id_fornecedor,
                         categoria: servicoObj.categoria,
                         data: servicoObj.data,
                         horario: servicoObj.horario,
@@ -97,6 +98,7 @@ export class ServicoRepository {
             
             return {
                 id_servico: servicoObj.id_servico,
+                id_fornecedor:servicoObj.id_fornecedor,
                 id_usuario: servicoObj.id_usuario,
                 categoria: servicoObj.categoria,
                 data: servicoObj.data,

@@ -15,6 +15,7 @@ export interface typeServico {
 
 export interface ServicoComFornecedor {
     id_servico: string;
+    id_fornecedor?:string;
     id_usuario: string;
     categoria: string;
     data: Date;

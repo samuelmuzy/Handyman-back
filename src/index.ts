@@ -8,6 +8,8 @@ import { MensagemService } from './service/mensagem/MensagemService';
 import { mensagemRouter } from './routes/mensagem/mensagemRoutes';
 import { pagamentoRouter } from './routes/pagamento/PagamentoRouter';
 import { servicoRouter } from './routes/servicoAgendado/ServicoRoutes';
+import avaliacaoRouter from './routes/avaliacao/AvaliacaoRoutes';
+
 
 // Rotas
 app.use('/usuarios', usuarioRouter);
@@ -16,6 +18,7 @@ app.use('/faq', faqRouter);
 app.use('/mensagem', mensagemRouter);
 app.use('/pagamento',pagamentoRouter);
 app.use('/servicos',servicoRouter);
+app.use('/avaliacao',avaliacaoRouter);
 
 // Cria servidor HTTP com Express
 const server = http.createServer(app);

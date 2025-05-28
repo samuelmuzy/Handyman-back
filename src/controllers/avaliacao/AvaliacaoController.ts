@@ -1,0 +1,46 @@
+import { Request, Response } from "express";
+import { CustomError } from "../../service/CustomError";
+import { typeAvaliacao } from "../../types/avaliacaoType";
+import { AvaliacaoService } from "../../service/avaliacao/AvaliacaoService";
+
+
+export class AvaliacaoController {
+    private service: AvaliacaoService;
+
+    constructor() {
+        this.service = new AvaliacaoService();
+    }
+
+    public async criarAvaliacao(req: Request, res: Response) {
+        try {
+            const { id_servico, id_usuario, id_fornecedor, nota, comentario, data } = req.body;
+            
+            
+            const avaliacao: typeAvaliacao = {
+                id_servico,
+                id_usuario,
+                id_fornecedor,
+                nota,
+                comentario,
+                data: data || new Date()
+            }
+            console.log(avaliacao)
+
+            const avaliacaoSucesso = await this.service.criarAvaliacao(avaliacao);
+            res.status(201).json(avaliacaoSucesso);
+
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ 
+                    error: error.message,
+                    details: error.details 
+                });
+            } else {
+                res.status(500).json({ 
+                    error: 'Erro interno do servidor',
+                    details: error instanceof Error ? error.message : 'Erro desconhecido'
+                });
+            }
+        }
+    }
+}
