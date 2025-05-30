@@ -3,6 +3,7 @@ import { CustomError } from "../../service/CustomError";
 import { ServicoService } from "../../service/servicoAgendado/ServicoService";
 import { typeServico } from "../../types/servicoType";
 import { generateId } from "../../middlewares/generateId";
+import { io } from "../../index";
 
 export class ServicoController{
     private servicoService = new ServicoService();
@@ -58,9 +59,29 @@ export class ServicoController{
 
     public atualizarStatus = async (req: Request, res: Response) => {
         try{
-            const { id_servico,status } = req.body;
+            const { id_servico, status } = req.body;
 
-            const dados = await this.servicoService.atualizarStatus(id_servico,{ status });
+            const dados = await this.servicoService.atualizarStatus(id_servico, { status });
+
+            // Busca informações adicionais do serviço para enviar no socket
+            const servico = await this.servicoService.buscarServico(id_servico);
+
+            if (!servico) {
+                throw new CustomError("Serviço não encontrado", 404);
+            }
+
+            // Emite o evento de mudança de status para o usuário e fornecedor
+            io.to(servico.id_usuario).emit('atualizacao_status', {
+                id_servico,
+                novo_status: status,
+                timestamp: new Date()
+            });
+
+            io.to(servico.id_fornecedor as string).emit('atualizacao_status', {
+                id_servico,
+                novo_status: status,
+                timestamp: new Date()
+            });
 
             res.status(200).send(dados);
         }catch (error: unknown) {

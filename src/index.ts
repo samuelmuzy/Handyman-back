@@ -24,7 +24,7 @@ app.use('/avaliacao',avaliacaoRouter);
 const server = http.createServer(app);
 
 // Cria Socket.IO
-const io = new Server(server, {
+export const io = new Server(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']
@@ -51,6 +51,25 @@ io.on('connection', (socket) => {
         const novaMsg = await mensagemService.enviarMensagem(msg);
         io.to(msg.remetenteId).emit('nova_mensagem', novaMsg);
         io.to(msg.destinatarioId).emit('nova_mensagem', novaMsg);
+    });
+
+    // Novo evento para mudança de status
+    socket.on('mudanca_status', async (data) => {
+        const { id_servico, novo_status, id_usuario, id_fornecedor } = data;
+        
+        // Emite para o usuário
+        io.to(id_usuario).emit('atualizacao_status', {
+            id_servico,
+            novo_status,
+            timestamp: new Date()
+        });
+
+        // Emite para o fornecedor
+        io.to(id_fornecedor).emit('atualizacao_status', {
+            id_servico,
+            novo_status,
+            timestamp: new Date()
+        });
     });
 });
 
