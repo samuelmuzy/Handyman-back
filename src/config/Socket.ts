@@ -20,6 +20,17 @@ interface StatusUpdate {
     timestamp: Date;
 }
 
+// Interface para novo agendamento
+interface NovoAgendamentoEvent {
+    id_servico: string;
+    id_fornecedor: string;
+    categoria: string;
+    data: Date;
+    horario: Date;
+    status: string;
+    descricao: string;
+}
+
 export class SocketConfig {
     private io: Server;
     private mensagemService: MensagemService;
@@ -92,6 +103,13 @@ export class SocketConfig {
                     });
                 }
             });
+
+            // Novo evento: novo agendamento
+            socket.on('novo_agendamento', (data: NovoAgendamentoEvent) => {
+                // Emite o evento de novo agendamento para o fornecedor específico
+                this.io.to(data.id_fornecedor).emit('novo_agendamento', data);
+                
+            });
         });
     }
 
@@ -105,6 +123,11 @@ export class SocketConfig {
     public emitirNovaMensagem(mensagem: IMensagem): void {
         this.io.to(mensagem.remetenteId).emit('nova_mensagem', mensagem);
         this.io.to(mensagem.destinatarioId).emit('nova_mensagem', mensagem);
+    }
+
+    // Método para emitir novo agendamento
+    public emitirNovoAgendamento(agendamento: NovoAgendamentoEvent): void {
+        this.io.to(agendamento.id_fornecedor).emit('novo_agendamento', agendamento);
     }
 
     // Getter para a instância do Socket.IO
