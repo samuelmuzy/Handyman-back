@@ -198,7 +198,17 @@ export class FornecedorController {
     public buscarFornecedorPorCategoria = async(req:Request,res:Response):Promise<void> =>{
         try {
             const { categoria_servico } = req.params;
-            const fornecedores =await fornecedorService.buscarFornecedorPorCategoria(categoria_servico);
+            const { ordenarPor, ordem } = req.query;
+
+            // Validação dos parâmetros de ordenação
+            const ordenacaoValida = ['avaliacao', 'preco'].includes(ordenarPor as string);
+            const ordemValida = ['asc', 'desc'].includes(ordem as string);
+
+            const fornecedores = await fornecedorService.buscarFornecedorPorCategoria(
+                categoria_servico,
+                ordenarPor as 'avaliacao' | 'preco' | undefined,
+                ordem as 'asc' | 'desc' | undefined
+            );
             res.status(200).json(fornecedores);
         } catch (error:unknown) {
             if(error instanceof CustomError){

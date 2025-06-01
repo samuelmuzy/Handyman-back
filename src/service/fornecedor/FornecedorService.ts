@@ -105,20 +105,57 @@ export class FornecedorService extends BaseService {
         }
     }
 
-    public async buscarFornecedorPorCategoria (categoria_servico:string):Promise<typeFornecedor[]>{
+    public async buscarFornecedorPorCategoria (
+        categoria_servico: string,
+        ordenarPor?: 'avaliacao' | 'preco',
+        ordem: 'asc' | 'desc' = 'desc'
+    ): Promise<typeFornecedor[]> {
         try {
+            
+            // Se a categoria for undefined, null, vazia ou só espaços
+            if (categoria_servico === "Controle") {
+                const todosFornecedores = await this.fornecedorRepository.buscarFornecedores();
+                if (todosFornecedores.length === 0) {
+                    throw new CustomError('Nenhum fornecedor encontrado', 404);
+                }
+                return this.ordenarFornecedores(todosFornecedores, ordenarPor, ordem);
+            }
+
             const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorCategoria(categoria_servico);
-            if(fornecedores.length===0){
-                throw new CustomError('Categoria inexistente',404);
+            
+            if(fornecedores.length === 0){
+                throw new CustomError('Categoria inexistente', 404);
             }
-            return fornecedores;
+
+            return this.ordenarFornecedores(fornecedores, ordenarPor, ordem);
         } catch (error) {
-            if(error instanceof CustomError){
-                throw new CustomError(error.message,error.statusCode);
-            }else{
-                throw new CustomError('Erro desconhecido',500);
-            }
+            this.handleError(error);
         }
+    }
+
+    private ordenarFornecedores(
+        fornecedores: typeFornecedor[],
+        ordenarPor?: 'avaliacao' | 'preco',
+        ordem: 'asc' | 'desc' = 'desc'
+    ): typeFornecedor[] {
+        if (!ordenarPor) return fornecedores;
+
+        return [...fornecedores].sort((a, b) => {
+            let valorA: number;
+            let valorB: number;
+
+            if (ordenarPor === 'avaliacao') {
+                valorA = a.media_avaliacoes || 0;
+                valorB = b.media_avaliacoes || 0;
+            } else if (ordenarPor === 'preco') {
+                valorA = a.valor || 0;
+                valorB = b.valor || 0;
+            } else {
+                return 0;
+            }
+
+            return ordem === 'asc' ? valorA - valorB : valorB - valorA;
+        });
     }
 
     public async atualizarFornecedor(id: string, dados: Partial<typeFornecedor>): Promise<IFornecedor> {
