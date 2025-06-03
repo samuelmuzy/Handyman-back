@@ -190,6 +190,7 @@ export class FornecedorRepository {
               id_avaliacao: servico.id_avaliacao
             },
             usuario: usuario ? {
+              id_usuario: usuario.id_usuario,
               nome: usuario.nome,
               email: usuario.email,
               telefone: usuario.telefone,
