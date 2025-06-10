@@ -185,6 +185,7 @@ export class FornecedorRepository {
               data: servico.data,
               horario: servico.horario,
               status: servico.status,
+              data_submisao:servico.data_submisao,
               descricao: servico.descricao,
               id_pagamento: servico.id_pagamento,
               id_avaliacao: servico.id_avaliacao

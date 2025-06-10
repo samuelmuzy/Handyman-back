@@ -5,6 +5,7 @@ export interface typeServico {
     id_usuario: string;
     id_fornecedor: string;
     categoria: string;
+    data_submisao:Date;
     data: Date;
     horario: Date;
     status: string;
@@ -18,6 +19,7 @@ export interface ServicoComFornecedor {
     id_fornecedor?:string;
     id_usuario: string;
     categoria: string;
+    data_submisao:Date;
     data: Date;
     horario: Date;
     status: string;

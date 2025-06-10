@@ -40,6 +40,7 @@ export class ServicoController{
                 categoria,
                 data: dataServico,
                 horario: horarioServico,
+                data_submisao: new Date(),
                 status,
                 id_pagamento,
                 id_avaliacao,
