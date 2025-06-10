@@ -62,7 +62,9 @@ export class ServicoController{
         try{
             const { id_servico, status } = req.body;
 
-            const dados = await this.servicoService.atualizarStatus(id_servico, { status });
+            const data_submisao = new Date();
+
+            const dados = await this.servicoService.atualizarStatus(id_servico, { status,data_submisao });
 
             // Busca informações adicionais do serviço para enviar no socket
             const servico = await this.servicoService.buscarServico(id_servico);
