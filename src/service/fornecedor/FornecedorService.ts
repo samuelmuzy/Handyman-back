@@ -24,7 +24,8 @@ export class FornecedorService extends BaseService {
                 'senha',
                 'endereco',
                 'categoria_servico',
-                'descricao'
+                'descricao',
+                'sobre'
             ]);
 
             const emailExiste = await this.fornecedorRepository.buscarFornecedorPorEmail(fornecedor.email);

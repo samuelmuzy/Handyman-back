@@ -15,6 +15,7 @@ export interface IFornecedor extends Document {
     imagemPerfil:string;
     imagemIlustrativa:string;
     descricao: string;
+    sobre:string;
     disponibilidade: typeDisponibilidade[];
     imagemServicos: string[]
     solicitacoes: string[];
@@ -52,6 +53,7 @@ export class Fornecedor extends BaseBancoDeDados {
             imagemPerfil: { type:String, default: null },
             imagemIlustrativa:{ type:String, default:null },
             imagemServicos: [{ type:String }],
+            sobre:{ type:String },
             categoria_servico: [{ type: String, required: true }],
             descricao: { type: String, required: true },
             sub_descricao: { type:String, required:true },

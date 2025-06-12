@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { FornecedorService } from '../../service/fornecedor/FornecedorService';
 import { CustomError } from '../../service/CustomError';
 import { typeFornecedor } from '../../types/fornecedorType';
-import { FornecedorRepository } from '../../repositories/fornecedor/FornecedorRepository';
 import { uploadImagemBuffer } from '../../service/cloudinaryService';
 
 
@@ -11,7 +10,7 @@ const fornecedorService = new FornecedorService();
 export class FornecedorController {
     public criarFornecedor = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { nome, email, telefone, senha, endereco, categoria_servico, descricao, valor, sub_descricao } = req.body;
+            const { nome, email, telefone, senha, endereco, categoria_servico, descricao, valor, sub_descricao,sobre } = req.body;
             
     
             const fornecedorSalvar: typeFornecedor = {
@@ -24,11 +23,12 @@ export class FornecedorController {
                 descricao,
                 sub_descricao,
                 valor,
+                sobre,
                 imagemPerfil: '',
                 imagemIlustrativa: '', // adiciona a URL no fornecedor
                 disponibilidade: [],
                 solicitacoes: [],
-                media_avaliacoes: 0
+                media_avaliacoes: 5
             };
     
             const fornecedor = await fornecedorService.criarFornecedor(fornecedorSalvar);

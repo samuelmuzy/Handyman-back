@@ -23,6 +23,7 @@ export type typeFornecedor = {
     sub_descricao:string;
     imagemPerfil:string;
     imagemIlustrativa:string;
+    sobre:string;
     valor:number;
     disponibilidade: typeDisponibilidade[];
     solicitacoes: string[];
