@@ -8,6 +8,8 @@ export interface Iservico extends Document {
   data: Date;
   horario: Date;
   data_submisao:Date;
+  valor:number;
+  imagems:string[]
   status: string;
   id_pagamento: string;
   id_avaliacao: string;
@@ -21,6 +23,8 @@ const ServicoSchema = new Schema<Iservico>({
   descricao: { type:String , require:true},
   categoria: { type: String, required: true },
   data: { type: Date, required: true },
+  valor:{type:Number , required:false},
+  imagems:[{ type:String }],
   horario: { type: Date, required: true },
   data_submisao:{type:Date, required:true},
   status: { type: String, required: true },

@@ -59,4 +59,12 @@ export class ServicoService extends BaseService {
             this.handleError(error);
         }
     }
+
+    public async atualizarImagemServico(id_servico:string,imagems:string){
+        try{
+            await this.servicoRepository.atualizarImagemServico(id_servico,imagems);
+        }catch(error){
+            this.handleError(error);
+        }
+    }
 }

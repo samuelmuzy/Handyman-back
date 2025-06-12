@@ -6,6 +6,8 @@ export interface typeServico {
     id_fornecedor: string;
     categoria: string;
     data_submisao:Date;
+    imagems?:string[]
+    valor:number,
     data: Date;
     horario: Date;
     status: string;
@@ -19,6 +21,8 @@ export interface ServicoComFornecedor {
     id_fornecedor?:string;
     id_usuario: string;
     categoria: string;
+    imagems?:string[];
+    valor:number;
     data_submisao:Date;
     data: Date;
     horario: Date;
@@ -28,6 +32,7 @@ export interface ServicoComFornecedor {
     descricao: string;
     fornecedor: {
         nome: string;
+        imagemPerfil:string
         email: string;
         telefone: string;
         categoria_servico: string[];

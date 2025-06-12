@@ -4,11 +4,12 @@ import { ServicoService } from "../../service/servicoAgendado/ServicoService";
 import { typeServico } from "../../types/servicoType";
 import { generateId } from "../../middlewares/generateId";
 import { io } from "../../index";
+import { uploadImagemBuffer } from "../../service/cloudinaryService";
 
-export class ServicoController{
+export class ServicoController {
     private servicoService = new ServicoService();
     public criarServico = async (req: Request, res: Response) => {
-        try{
+        try {
             const {
                 id_usuario,
                 id_fornecedor,
@@ -16,6 +17,7 @@ export class ServicoController{
                 data,
                 horario,
                 status,
+                valor,
                 id_pagamento,
                 id_avaliacao,
                 descricao
@@ -38,6 +40,7 @@ export class ServicoController{
                 id_usuario,
                 id_fornecedor,
                 categoria,
+                valor,
                 data: dataServico,
                 horario: horarioServico,
                 data_submisao: new Date(),
@@ -49,7 +52,7 @@ export class ServicoController{
 
             const servico = await this.servicoService.criarServico(servicoBody);
             res.status(201).json(servico);
-        }catch (error: unknown) {
+        } catch (error: unknown) {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
@@ -59,12 +62,12 @@ export class ServicoController{
     };
 
     public atualizarStatus = async (req: Request, res: Response) => {
-        try{
+        try {
             const { id_servico, status } = req.body;
 
             const data_submisao = new Date();
 
-            const dados = await this.servicoService.atualizarStatus(id_servico, { status,data_submisao });
+            const dados = await this.servicoService.atualizarStatus(id_servico, { status, data_submisao });
 
             // Busca informações adicionais do serviço para enviar no socket
             const servico = await this.servicoService.buscarServico(id_servico);
@@ -87,7 +90,7 @@ export class ServicoController{
             });
 
             res.status(200).send(dados);
-        }catch (error: unknown) {
+        } catch (error: unknown) {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
@@ -97,13 +100,13 @@ export class ServicoController{
     };
 
     public buscarServico = async (req: Request, res: Response) => {
-        try{
+        try {
             const { idServico } = req.params;
 
             const dados = await this.servicoService.buscarServico(idServico);
 
             res.status(200).send(dados);
-        }catch (error: unknown) {
+        } catch (error: unknown) {
             if (error instanceof CustomError) {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
@@ -111,4 +114,29 @@ export class ServicoController{
             }
         }
     };
+
+    public inserirImagem = async (req: Request, res: Response) => {
+
+        try {
+            const { id_servico } = req.params;
+
+
+            if (!req.file) {
+                res.status(400).json({ error: 'Imagem não enviada' });
+                return;
+            }
+
+            const imagems = await uploadImagemBuffer(req.file.buffer, 'fornecedores');
+
+            await this.servicoService.atualizarImagemServico(id_servico, imagems);
+
+            res.status(200).json({ imagem: imagems });
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    }
 }
