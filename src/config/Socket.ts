@@ -31,6 +31,14 @@ interface NovoAgendamentoEvent {
     descricao: string;
 }
 
+// Interface para atualização de valor
+interface ValorUpdate {
+    id_servico: string;
+    novo_valor: number;
+    novo_status: string;
+    timestamp: Date;
+}
+
 export class SocketConfig {
     private io: Server;
     private mensagemService: MensagemService;
@@ -110,6 +118,29 @@ export class SocketConfig {
                 this.io.to(data.id_fornecedor).emit('novo_agendamento', data);
                 
             });
+
+            // Evento de atualização de valor
+            socket.on('atualizacao_valor', async (data: { id_servico: string, novo_valor: number, novo_status: string, id_usuario: string, id_fornecedor: string }) => {
+                try {
+                    const update: ValorUpdate = {
+                        id_servico: data.id_servico,
+                        novo_valor: data.novo_valor,
+                        novo_status: data.novo_status,
+                        timestamp: new Date()
+                    };
+
+                    // Emite para o usuário
+                    this.io.to(data.id_usuario).emit('valor_atualizado', update);
+
+                    // Emite para o fornecedor
+                    this.io.to(data.id_fornecedor).emit('valor_atualizado', update);
+                } catch (error) {
+                    console.error('Erro ao atualizar valor:', error);
+                    socket.emit('erro_valor', { 
+                        mensagem: 'Erro ao atualizar valor' 
+                    });
+                }
+            });
         });
     }
 
@@ -128,6 +159,12 @@ export class SocketConfig {
     // Método para emitir novo agendamento
     public emitirNovoAgendamento(agendamento: NovoAgendamentoEvent): void {
         this.io.to(agendamento.id_fornecedor).emit('novo_agendamento', agendamento);
+    }
+
+    // Método para emitir atualização de valor
+    public emitirAtualizacaoValor(update: ValorUpdate, id_usuario: string, id_fornecedor: string): void {
+        this.io.to(id_usuario).emit('valor_atualizado', update);
+        this.io.to(id_fornecedor).emit('valor_atualizado', update);
     }
 
     // Getter para a instância do Socket.IO

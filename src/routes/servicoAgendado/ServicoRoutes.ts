@@ -6,6 +6,13 @@ export const servicoRouter = express.Router();
 
 const servicoController = new ServicoController();
 
+servicoRouter.post('/', servicoController.criarServico);
+servicoRouter.get('/:idServico', servicoController.buscarServico);
+servicoRouter.get('/:idServico/usuario', servicoController.buscarServicoComUsuario);
+servicoRouter.put('/', servicoController.atualizarStatus);
+servicoRouter.put('/valor', servicoController.atualizarValorServico);
+servicoRouter.post('/:id_servico/imagem', servicoController.inserirImagem);
+
 servicoRouter.post('/',servicoController.criarServico);
 servicoRouter.put('/',servicoController.atualizarStatus);
 servicoRouter.get('/:idServico',servicoController.buscarServico);

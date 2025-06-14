@@ -5,6 +5,8 @@ import { typeServico } from "../../types/servicoType";
 import { generateId } from "../../middlewares/generateId";
 import { io } from "../../index";
 import { uploadImagemBuffer } from "../../service/cloudinaryService";
+import { SocketConfig } from "../../config/Socket";
+
 
 export class ServicoController {
     private servicoService = new ServicoService();
@@ -158,6 +160,45 @@ export class ServicoController {
                 res.status(error.statusCode).json({ error: error.message });
             } else {
                 res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    };
+
+    public atualizarValorServico = async (req: Request, res: Response) => {
+        try {
+            const { id_servico, valor } = req.body;
+
+            if (!id_servico || !valor) {
+                throw new CustomError("ID do serviço e valor são obrigatórios", 400);
+            }
+
+            if (isNaN(Number(valor)) || Number(valor) <= 0) {
+                throw new CustomError("Valor inválido", 400);
+            }
+
+            const servicoAtualizado = await this.servicoService.atualizarValorServico(id_servico, Number(valor));
+            
+            // Emite o evento de atualização de valor
+            io.to(servicoAtualizado.id_usuario).emit('valor_atualizado', {
+                id_servico,
+                novo_valor: Number(valor),
+                novo_status: 'confirmar valor',
+                timestamp: new Date()
+            });
+
+            io.to(servicoAtualizado.id_fornecedor as string).emit('valor_atualizado', {
+                id_servico,
+                novo_valor: Number(valor),
+                novo_status: 'confirmar valor',
+                timestamp: new Date()
+            });
+            
+            res.status(200).json(servicoAtualizado);
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido ao atualizar valor do serviço' });
             }
         }
     };

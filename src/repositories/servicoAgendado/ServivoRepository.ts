@@ -195,4 +195,22 @@ export class ServicoRepository {
             }
         }
     }
+
+    public async atualizarValorServico(id_servico: string, valor: number) {
+        try {
+            const servico = await ServicoModel.findOneAndUpdate(
+                { id_servico },
+                { valor },
+                { new: true }
+            );
+
+            if (!servico) {
+                throw new Error('Serviço não encontrado');
+            }
+
+            return servico;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

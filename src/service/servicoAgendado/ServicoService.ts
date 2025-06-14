@@ -76,4 +76,22 @@ export class ServicoService extends BaseService {
             this.handleError(error);
         }
     }
+
+    public async atualizarValorServico(id_servico: string, valor: number): Promise<Iservico> {
+        try {
+            const servico = await this.servicoRepository.buscarServico(id_servico);
+            
+            if (!servico) {
+                throw new CustomError('Serviço não encontrado', 404);
+            }
+
+            if (servico.status !== 'negociar valor') {
+                throw new CustomError('Só é possível alterar o valor de serviços negociar valor', 400);
+            }
+
+            return await this.servicoRepository.atualizarValorServico(id_servico, valor);
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
 }
