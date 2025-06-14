@@ -2,7 +2,7 @@ import { Iservico } from "../../models/servicoAgendado/Servico";
 import { FornecedorRepository } from "../../repositories/fornecedor/FornecedorRepository";
 import { ServicoRepository } from "../../repositories/servicoAgendado/ServivoRepository";
 import { UsuarioRepository } from "../../repositories/usuario/UsuarioRepository";
-import { typeServico } from "../../types/servicoType";
+import { typeServico, ServicoComUsuario } from "../../types/servicoType";
 import { BaseService } from "../BaseService";
 import { CustomError } from "../CustomError";
 
@@ -64,6 +64,15 @@ export class ServicoService extends BaseService {
         try{
             await this.servicoRepository.atualizarImagemServico(id_servico,imagems);
         }catch(error){
+            this.handleError(error);
+        }
+    }
+
+    public async buscarServicoComUsuario(idServico: string): Promise<ServicoComUsuario | null> {
+        try {
+            const servico = await this.servicoRepository.buscarServicoComUsuario(idServico);
+            return servico;
+        } catch (error) {
             this.handleError(error);
         }
     }

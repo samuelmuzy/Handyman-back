@@ -128,6 +128,8 @@ export class ServicoController {
 
             const imagems = await uploadImagemBuffer(req.file.buffer, 'fornecedores');
 
+            console.log(imagems)
+
             await this.servicoService.atualizarImagemServico(id_servico, imagems);
 
             res.status(200).json({ imagem: imagems });
@@ -139,4 +141,24 @@ export class ServicoController {
             }
         }
     }
+
+    public buscarServicoComUsuario = async (req: Request, res: Response) => {
+        try {
+            const { idServico } = req.params;
+
+            const dados = await this.servicoService.buscarServicoComUsuario(idServico);
+
+            if (!dados) {
+                throw new CustomError("Serviço não encontrado", 404);
+            }
+
+            res.status(200).send(dados);
+        } catch (error: unknown) {
+            if (error instanceof CustomError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Erro desconhecido' });
+            }
+        }
+    };
 }

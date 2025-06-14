@@ -1,9 +1,11 @@
 import { Iservico, ServicoModel } from "../../models/servicoAgendado/Servico";
-import { typeServico, ServicoComFornecedor } from "../../types/servicoType";
+import { typeServico, ServicoComFornecedor, ServicoComUsuario } from "../../types/servicoType";
 import { Fornecedor } from "../../models/fornecedor/Fornecedor";
+import { Usuario } from "../../models/usuario/Usuario";
 
 export class ServicoRepository {
     private fornecedorModel = Fornecedor.getInstance().getModel();
+    private usuarioModel = Usuario.getInstance().getModel();
 
     public async criarServico(servicoBody: typeServico): Promise<Iservico> {
         try {
@@ -85,11 +87,11 @@ export class ServicoRepository {
         }
     }
 
-    public async atualizarImagemServico(id_servico: string, imagems: string) {
+    public async atualizarImagemServico(id_servico: string, imagem: string) {
         try {
             return await ServicoModel.findOneAndUpdate(
                 { id_servico: id_servico },
-                { $push: { imagems: imagems } },
+                { $push: { imagems: imagem } },
                 { new: true }
             );
         } catch (error: unknown) {
@@ -136,6 +138,51 @@ export class ServicoRepository {
                     telefone: fornecedor.telefone,
                     categoria_servico: fornecedor.categoria_servico,
                     media_avaliacoes: fornecedor.media_avaliacoes
+                } : null
+            };
+
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                throw new Error(`Erro ao buscar serviço: ${error.message}`);
+            } else {
+                throw new Error("Erro desconhecido ao buscar serviço");
+            }
+        }
+    }
+
+    public async buscarServicoComUsuario(id_servico: string): Promise<ServicoComUsuario | null> {
+        try {
+            const servico = await ServicoModel.findOne({ id_servico });
+
+            if (!servico) {
+                return null;
+            }
+
+            const usuario = await this.usuarioModel.findOne({
+                id_usuario: servico.id_usuario
+            });
+
+            const servicoObj = servico.toObject();
+
+            return {
+                id_servico: servicoObj.id_servico,
+                id_fornecedor: servicoObj.id_fornecedor,
+                id_usuario: servicoObj.id_usuario,
+                imagems: servicoObj.imagems,
+                data_submisao: servicoObj.data_submisao,
+                categoria: servicoObj.categoria,
+                data: servicoObj.data,
+                horario: servicoObj.horario,
+                status: servicoObj.status,
+                id_pagamento: servicoObj.id_pagamento,
+                id_avaliacao: servicoObj.id_avaliacao,
+                descricao: servicoObj.descricao,
+                valor: servicoObj.valor,
+                usuario: usuario ? {
+                    imagemPerfil: usuario.picture,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    telefone: usuario.telefone
                 } : null
             };
 

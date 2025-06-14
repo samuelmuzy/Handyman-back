@@ -9,4 +9,5 @@ const servicoController = new ServicoController();
 servicoRouter.post('/',servicoController.criarServico);
 servicoRouter.put('/',servicoController.atualizarStatus);
 servicoRouter.get('/:idServico',servicoController.buscarServico);
-servicoRouter.post('/inserir-imagems/:id_servico',upload.single("imagem"),servicoController.inserirImagem)
+servicoRouter.get('/:idServico/usuario',servicoController.buscarServicoComUsuario);
+servicoRouter.post('/inserir-imagems/:id_servico',upload.single("imagem"),servicoController.inserirImagem);
