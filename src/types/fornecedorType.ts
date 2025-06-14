@@ -3,6 +3,8 @@ export type typeEndereco = {
     cidade: string;
     estado: string;
     cep: string;
+    numero:string;
+    tipoMoradia:string;
 }
 
 export type typeDisponibilidade = {

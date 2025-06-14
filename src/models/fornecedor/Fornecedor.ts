@@ -26,7 +26,9 @@ const enderecoSchema = new Schema({
     rua: { type: String, required: true },
     cidade: { type: String, required: true },
     estado: { type: String, required: true },
-    cep: { type: String, required: true }
+    cep: { type: String, required: true },
+    numero: { type:String },
+    tipoMoradia: {type:String}
 });
 
 const disponibilidadeSchema = new Schema({

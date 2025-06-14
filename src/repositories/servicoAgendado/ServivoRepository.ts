@@ -182,7 +182,8 @@ export class ServicoRepository {
                     imagemPerfil: usuario.picture,
                     nome: usuario.nome,
                     email: usuario.email,
-                    telefone: usuario.telefone
+                    telefone: usuario.telefone,
+                    endereco:usuario.endereco
                 } : null
             };
 

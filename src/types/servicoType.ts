@@ -1,4 +1,5 @@
-import { Iservico } from "../models/servicoAgendado/Servico";
+import { typeEndereco } from "./fornecedorType";
+
 
 export interface typeServico {
     id_servico: string,
@@ -59,5 +60,6 @@ export interface ServicoComUsuario {
         nome: string;
         email: string;
         telefone: string;
+        endereco:typeEndereco
     } | null;
 }
