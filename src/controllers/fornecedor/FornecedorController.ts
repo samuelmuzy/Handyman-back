@@ -219,6 +219,32 @@ export class FornecedorController {
         }
     };
 
+    public buscarFornecedorPorTermo = async(req:Request,res:Response):Promise<void> =>{
+        try {
+            const { categoria_servico } = req.params;
+            const { termo, ordenarPor, ordem } = req.query;
+
+            if (!termo || typeof termo !== 'string') {
+                res.status(400).json({ error: 'Termo de pesquisa inválido' });
+                return;
+            }
+
+            const fornecedores = await fornecedorService.buscarFornecedorPorTermo(
+                categoria_servico,
+                termo,
+                ordenarPor as 'avaliacao' | 'preco' | undefined,
+                ordem as 'asc' | 'desc' | undefined
+            );
+            res.status(200).json(fornecedores);
+        } catch (error:unknown) {
+            if(error instanceof CustomError){
+                res.status(error.statusCode).json({ error:error.message });
+            }else{
+                res.status(500).json({ error:'Erro desconhecido ao buscar' });
+            }
+        }
+    };
+
     public atualizarFornecedor = async (req: Request, res: Response): Promise<void> => {
         try {
             const { id } = req.params;

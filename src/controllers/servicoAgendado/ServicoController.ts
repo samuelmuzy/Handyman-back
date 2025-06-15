@@ -49,6 +49,7 @@ export class ServicoController {
                 status,
                 id_pagamento,
                 id_avaliacao,
+                avaliado:false,
                 descricao
             };
 

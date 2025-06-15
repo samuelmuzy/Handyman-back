@@ -2,13 +2,16 @@ import { Request, Response } from "express";
 import { CustomError } from "../../service/CustomError";
 import { typeAvaliacao } from "../../types/avaliacaoType";
 import { AvaliacaoService } from "../../service/avaliacao/AvaliacaoService";
+import { ServicoService } from "../../service/servicoAgendado/ServicoService";
 
 
 export class AvaliacaoController {
     private service: AvaliacaoService;
+    private servicoService: ServicoService;
 
     constructor() {
         this.service = new AvaliacaoService();
+        this.servicoService = new ServicoService();
     }
 
     public async criarAvaliacao(req: Request, res: Response) {
@@ -24,7 +27,9 @@ export class AvaliacaoController {
                 comentario,
                 data: data || new Date()
             }
-            console.log(avaliacao)
+            const avaliado = true
+            
+            this.servicoService.atualizarStatus(id_servico, { avaliado })
 
             const avaliacaoSucesso = await this.service.criarAvaliacao(avaliacao);
             res.status(201).json(avaliacaoSucesso);

@@ -12,6 +12,7 @@ export interface typeServico {
     data: Date;
     horario: Date;
     status: string;
+    avaliado:boolean;
     id_pagamento?: string;
     id_avaliacao?: string;
     descricao: string;
@@ -31,6 +32,7 @@ export interface ServicoComFornecedor {
     id_pagamento?: string;
     id_avaliacao?: string;
     descricao: string;
+    avaliado:boolean;
     fornecedor: {
         nome: string;
         imagemPerfil:string

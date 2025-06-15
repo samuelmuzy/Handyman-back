@@ -60,6 +60,27 @@ export class FornecedorRepository {
     }
   }
 
+  public async buscarFornecedoresPorTermo(categoria_servico: string, termo: string) {
+    try {
+      const termoRegex = new RegExp(termo, 'i');
+      const fornecedores = await this.model.find({
+        $or: [
+          { categoria_servico: termoRegex },
+          { nome: termoRegex },
+          { descricao: termoRegex },
+          { sub_descricao: termoRegex }
+        ]
+      });
+      return fornecedores;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Erro ao buscar fornecedores: ${error.message}`);
+      } else {
+        throw new Error("Erro desconhecido ao buscar fornecedores");
+      }
+    }
+  }
+
   public async buscarFornecedorPorEmail(email: string) {
     try {
       const fornecedor = await this.model.findOne({ email });

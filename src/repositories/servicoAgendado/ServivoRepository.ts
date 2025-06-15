@@ -46,6 +46,7 @@ export class ServicoRepository {
                         id_pagamento: servicoObj.id_pagamento,
                         id_avaliacao: servicoObj.id_avaliacao,
                         descricao: servicoObj.descricao,
+                        avaliado:servicoObj.avaliado,
                         valor:servicoObj.valor,
                         fornecedor: fornecedor ? {
                             imagemPerfil: fornecedor.imagemPerfil,
@@ -131,6 +132,7 @@ export class ServicoRepository {
                 id_avaliacao: servicoObj.id_avaliacao,
                 descricao: servicoObj.descricao,
                 valor:servicoObj.valor,
+                avaliado:servicoObj.avaliado,
                 fornecedor: fornecedor ? {
                     imagemPerfil: fornecedor.imagemPerfil,
                     nome: fornecedor.nome,

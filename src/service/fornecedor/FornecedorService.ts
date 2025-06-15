@@ -53,12 +53,12 @@ export class FornecedorService extends BaseService {
         try {
             const fornecedor = await this.fornecedorRepository.buscarFornecedorPorEmail(email);
             if (!fornecedor) {
-                throw new CustomError('Email não encontrado', 404);
+                throw new CustomError('Email ou senha incorretos', 404);
             }
 
             const senhaCorreta = await compare(senha, fornecedor.senha);
             if (!senhaCorreta) {
-                throw new CustomError('Senha incorreta', 401);
+                throw new CustomError('Email ou senha incorretos', 401);
             }
 
             const token = generateToken({ id: fornecedor.id_fornecedor, email:fornecedor.email,imagemPerfil:fornecedor.imagemPerfil,nome:fornecedor.nome, role: 'Fornecedor' });
@@ -126,6 +126,29 @@ export class FornecedorService extends BaseService {
             
             if(fornecedores.length === 0){
                 throw new CustomError('Categoria inexistente', 404);
+            }
+
+            return this.ordenarFornecedores(fornecedores, ordenarPor, ordem);
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
+    public async buscarFornecedorPorTermo(
+        categoria_servico: string,
+        termo: string,
+        ordenarPor?: 'avaliacao' | 'preco',
+        ordem: 'asc' | 'desc' = 'desc'
+    ): Promise<typeFornecedor[]> {
+        try {
+            if (!termo.trim()) {
+                return this.buscarFornecedorPorCategoria(categoria_servico, ordenarPor, ordem);
+            }
+
+            const fornecedores = await this.fornecedorRepository.buscarFornecedoresPorTermo(categoria_servico, termo);
+            
+            if (fornecedores.length === 0) {
+                throw new CustomError('Nenhum fornecedor encontrado para o termo pesquisado', 404);
             }
 
             return this.ordenarFornecedores(fornecedores, ordenarPor, ordem);

@@ -14,6 +14,7 @@ export interface Iservico extends Document {
   id_pagamento: string;
   id_avaliacao: string;
   descricao:string;
+  avaliado:boolean;
 }
 
 const ServicoSchema = new Schema<Iservico>({
@@ -29,7 +30,8 @@ const ServicoSchema = new Schema<Iservico>({
   data_submisao:{type:Date, required:true},
   status: { type: String, required: true },
   id_pagamento: { type: String, required: false },
-  id_avaliacao: { type: String, required: false }
+  id_avaliacao: { type: String, required: false },
+  avaliado:{type:Boolean, default:false}
 });
 
 export const ServicoModel = mongoose.model<Iservico>('Servico', ServicoSchema);
