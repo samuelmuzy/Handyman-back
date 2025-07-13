@@ -1,4 +1,4 @@
-# 🔧 Handyman API (Back-end)
+# 🔧 Handyman API 
 
 Este é o back-end do projeto acadêmico **Handyman**, uma API desenvolvida para dar suporte ao site de conexão entre prestadores de serviços manuais e clientes.
 
