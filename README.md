@@ -39,7 +39,7 @@ O back-end foi desenvolvido com as seguintes tecnologias:
 
 Clone o repositório:
 
-git clone https://github.com/seu-usuario/handyman-backend.git
+git clone https://github.com/samuelmuzy/Handyman-back.git
 
 cd handyman-backend
 
